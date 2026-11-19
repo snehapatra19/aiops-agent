@@ -81,25 +81,25 @@ Scenarios for `--scenario`: normal, cpu_saturation, db_pool_exhaustion, memory_l
 
 
 
-**Datasets**
+## Datasets
 
+`data/nab/` (a subset of NAB) and the synthetic data are included in this repo. The large public datasets in `data/real/` are **not** included because of GitHub's file size limit. Download them from the links below and place the zip files in `data/real/`.
 
+| Dataset | File in `data/real/` | Source |
+|---|---|---|
+| Numenta Anomaly Benchmark (NAB) | `archive (13).zip` | https://github.com/numenta/NAB |
+| Incident management process enriched event log (ServiceNow, IT company) | `archive (12).zip` | https://archive.ics.uci.edu/dataset/498/incident+management+process+enriched+event+log |
+| KPI Anomaly Detection | `KPI-Anomaly-Detection-master.zip` | https://github.com/NetManAIOps/KPI-Anomaly-Detection |
+| OmniAnomaly (server machine data) | `OmniAnomaly-master.zip` | https://github.com/NetManAIOps/OmniAnomaly |
+| SKAB (Skoltech Anomaly Benchmark) | `SKAB-master.zip` | https://github.com/waico/SKAB |
+| Loghub (system logs) | `loghub-master.zip` | https://github.com/logpai/loghub |
+| SSD location info | `location_info_of_ssd_csv.zip` | Alibaba SSD location data (nodes, racks, apps) | `location_info_of_ssd_csv.zip` | https://github.com/alibaba-edu/dcbrain/tree/master/ssd_open_data |
 
-`data/nab/` and the synthetic data are included in the repo. The large public datasets in `data/real/` are NOT included (GitHub size limit). Download them and place the zip files in `data/real/`:
+### References
 
-
-
-\- KPI-Anomaly-Detection: https://github.com/NetManAIOps/KPI-Anomaly-Detection
-
-\- OmniAnomaly: https://github.com/NetManAIOps/OmniAnomaly
-
-\- SKAB: https://github.com/waico/SKAB
-
-\- loghub: https://github.com/logpai/loghub
-
-
-
-(Add the source of the remaining two zips, `archive__12_.zip` and `location_info_of_ssd_csv.zip`, here.)
+- Lavin, A., & Ahmad, S. (2015). Evaluating Real-time Anomaly Detection Algorithms: the Numenta Anomaly Benchmark. IEEE ICMLA.
+- Amaral, C., Fantinato, M., & Peres, S. (2018). Incident management process enriched event log. UCI Machine Learning Repository. https://doi.org/10.24432/C57S4H
+- Han, S., Lee, P. P. C., Xu, F., Liu, Y., He, C., & Liu, J. (2021). An In-Depth Study of Correlated Failures in Production SSD-Based Data Centers. USENIX FAST 2021.
 
 ## Regenerate all paper numbers
 
