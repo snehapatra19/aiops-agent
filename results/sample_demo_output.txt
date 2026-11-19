@@ -1,0 +1,12 @@
+[engine=langgraph, langgraph_installed=True]  SYNTHETIC case S42-047 (db_pool_exhaustion)
+  detect     5 sustained anomalies
+  correlate  13 alerts -> 2 groups; incident has 12 alerts
+  evidence   10 logs, 0 traces
+  rca        top=db_pool_exhaustion conf=0.9018 margin=0.8746 uncertain=False
+  plan       increase_db_pool_size on db-primary: allowed (risk=low)
+  execute    [SIMULATED] increase_db_pool_size on db-primary
+  verify     resolved
+  report     resolved
+
+Final status: resolved | 
+Ground truth: cause = db_pool_exhaustion | expected_final = resolved

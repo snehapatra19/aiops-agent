@@ -1,0 +1,168 @@
+{
+ "incident_id": "INC-S42-049",
+ "case_id": "S42-049",
+ "synthetic": true,
+ "scenario_type": "memory_leak",
+ "final_status": "resolved",
+ "escalation_reason": null,
+ "engine": "langgraph",
+ "symptoms": [
+  {
+   "service": "payment-service",
+   "metric": "latency_ms",
+   "onset_idx": 24,
+   "detect_idx": 27,
+   "peak_z": 25.55,
+   "peak_value": 427.3
+  },
+  {
+   "service": "payment-service",
+   "metric": "mem",
+   "onset_idx": 25,
+   "detect_idx": 28,
+   "peak_z": 20.44,
+   "peak_value": 100.0
+  },
+  {
+   "service": "payment-service",
+   "metric": "error_rate",
+   "onset_idx": 28,
+   "detect_idx": 31,
+   "peak_z": 33.4,
+   "peak_value": 3.76
+  }
+ ],
+ "correlated_alerts": [
+  "S42-049-A02",
+  "S42-049-A03",
+  "S42-049-A04",
+  "S42-049-A05"
+ ],
+ "root_cause": {
+  "top": "memory_leak",
+  "confidence": 0.9018,
+  "margin": 0.8746,
+  "root_service": "payment-service",
+  "ranked": [
+   [
+    "memory_leak",
+    0.9018
+   ],
+   [
+    "cpu_saturation",
+    0.0272
+   ],
+   [
+    "db_pool_exhaustion",
+    0.0272
+   ],
+   [
+    "dependency_failure",
+    0.0272
+   ],
+   [
+    "bad_deployment",
+    0.0165
+   ]
+  ],
+  "evidence": [
+   "+2.0: memory anomaly on payment-service",
+   "+1.5: log: GC/OOM",
+   "+0.5: latency symptom present"
+  ],
+  "missing": [
+   "no trace summaries retrieved"
+  ],
+  "next_step": "Capture heap profile and check memory growth trend over the last hours.",
+  "uncertain": false
+ },
+ "action": {
+  "action": "restart_service",
+  "target": "payment-service",
+  "params": {},
+  "environment": "sandbox"
+ },
+ "policy": {
+  "allowed": true,
+  "requires_approval": false,
+  "risk": "medium",
+  "reason": "allowed"
+ },
+ "execution": {
+  "exec_ok": true,
+  "detail": "[SIMULATED] restart_service on payment-service",
+  "duration_s": 90,
+  "post_mode": "fixed"
+ },
+ "verification": {
+  "overall": "resolved",
+  "series": [
+   {
+    "service": "payment-service",
+    "metric": "latency_ms",
+    "state": "resolved",
+    "ratio": 0.033,
+    "baseline": 118.17,
+    "peak": 423.6,
+    "post": 128.15
+   },
+   {
+    "service": "payment-service",
+    "metric": "mem",
+    "state": "resolved",
+    "ratio": 0.018,
+    "baseline": 49.45,
+    "peak": 96.66,
+    "post": 50.28
+   },
+   {
+    "service": "payment-service",
+    "metric": "error_rate",
+    "state": "resolved",
+    "ratio": 0.035,
+    "baseline": 0.42,
+    "peak": 3.44,
+    "post": 0.52
+   }
+  ],
+  "verify_window_s": 75
+ },
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "3 sustained anomalies"
+  },
+  {
+   "node": "correlate",
+   "msg": "5 alerts -> 2 groups; incident has 4 alerts"
+  },
+  {
+   "node": "evidence",
+   "msg": "7 logs, 0 traces"
+  },
+  {
+   "node": "rca",
+   "msg": "top=memory_leak conf=0.9018 margin=0.8746 uncertain=False"
+  },
+  {
+   "node": "plan",
+   "msg": "restart_service on payment-service: allowed (risk=medium)"
+  },
+  {
+   "node": "execute",
+   "msg": "[SIMULATED] restart_service on payment-service"
+  },
+  {
+   "node": "verify",
+   "msg": "resolved"
+  },
+  {
+   "node": "report",
+   "msg": "resolved"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "memory_leak",
+  "expected_final": "resolved"
+ }
+}

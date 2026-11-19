@@ -1,0 +1,174 @@
+{
+  "seed": 42,
+  "dataset_hash": "2ba5e3286ed0a46b",
+  "n_cases": 120,
+  "proposed": {
+    "detection": {
+      "n": 120,
+      "TP": 100,
+      "FP": 0,
+      "TN": 20,
+      "FN": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "fpr": 0.0
+    },
+    "correlation": {
+      "cases": 120,
+      "alerts": 925,
+      "groups_out": 161,
+      "true_groups": 165,
+      "pair_precision": 0.9582,
+      "pair_recall": 0.9528,
+      "pair_f1": 0.9555,
+      "exact_partition_cases": 93,
+      "exact_partition_rate": 0.775,
+      "alert_reduction_ratio": 0.8259
+    },
+    "rca": {
+      "n_incident_cases": 100,
+      "top1_correct": 90,
+      "top1_acc": 0.9,
+      "top3_acc": 0.98,
+      "root_service_acc": 0.92,
+      "uncertain_cases": 16,
+      "coverage_confident": 0.84,
+      "selective_top1_acc": 0.9881,
+      "per_class": {
+        "cpu_saturation": {
+          "n": 28,
+          "top1": 1.0
+        },
+        "db_pool_exhaustion": {
+          "n": 26,
+          "top1": 0.7692
+        },
+        "memory_leak": {
+          "n": 15,
+          "top1": 1.0
+        },
+        "dependency_failure": {
+          "n": 21,
+          "top1": 0.8095
+        },
+        "bad_deployment": {
+          "n": 10,
+          "top1": 1.0
+        }
+      }
+    },
+    "remediation": {
+      "attempts": 68,
+      "exec_ok": 68,
+      "actually_effective": 55,
+      "effective_rate_of_attempts": 0.8088,
+      "claimed_resolved": 55,
+      "false_resolution_claims": 0,
+      "false_resolution_rate": 0.0,
+      "verified_resolved": 55,
+      "verification_unresolved": 9,
+      "verification_inconclusive": 4,
+      "escalated": 45,
+      "escalation_rate": 0.375,
+      "expected_escalation_cases": 46,
+      "actions_executed_on_expected_escalation": 14,
+      "closed_as_resolved_on_expected_escalation": 1,
+      "final_decision_accuracy": 0.9917
+    },
+    "time": {
+      "n_truly_resolved_with_ttr": 55,
+      "mean_ttr_sim_s": 199.9,
+      "median_ttr_sim_s": 180.0,
+      "note": "SIMULATED seconds: detection delay + configured action duration + verification window"
+    }
+  },
+  "baseline": {
+    "detection": {
+      "n": 120,
+      "TP": 100,
+      "FP": 12,
+      "TN": 8,
+      "FN": 0,
+      "precision": 0.8929,
+      "recall": 1.0,
+      "f1": 0.9434,
+      "fpr": 0.6
+    },
+    "correlation": {
+      "cases": 120,
+      "alerts": 925,
+      "groups_out": 275,
+      "true_groups": 165,
+      "pair_precision": 0.9995,
+      "pair_recall": 0.3806,
+      "pair_f1": 0.5513,
+      "exact_partition_cases": 52,
+      "exact_partition_rate": 0.4333,
+      "alert_reduction_ratio": 0.7027
+    },
+    "rca": {
+      "n_incident_cases": 100,
+      "top1_correct": 45,
+      "top1_acc": 0.45,
+      "top3_acc": null,
+      "root_service_acc": 0.2,
+      "uncertain_cases": 0,
+      "coverage_confident": 1.0,
+      "selective_top1_acc": 0.45,
+      "per_class": {
+        "cpu_saturation": {
+          "n": 28,
+          "top1": 0.9643
+        },
+        "db_pool_exhaustion": {
+          "n": 26,
+          "top1": 0.0
+        },
+        "memory_leak": {
+          "n": 15,
+          "top1": 0.6
+        },
+        "dependency_failure": {
+          "n": 21,
+          "top1": 0.0
+        },
+        "bad_deployment": {
+          "n": 10,
+          "top1": 0.9
+        }
+      }
+    },
+    "remediation": {
+      "attempts": 83,
+      "exec_ok": 83,
+      "actually_effective": 15,
+      "effective_rate_of_attempts": 0.1807,
+      "claimed_resolved": 83,
+      "false_resolution_claims": 68,
+      "false_resolution_rate": 0.8193,
+      "verified_resolved": 0,
+      "verification_unresolved": 0,
+      "verification_inconclusive": 0,
+      "escalated": 29,
+      "escalation_rate": 0.2417,
+      "expected_escalation_cases": 46,
+      "actions_executed_on_expected_escalation": 34,
+      "closed_as_resolved_on_expected_escalation": 34,
+      "final_decision_accuracy": 0.5417
+    },
+    "time": {
+      "n_truly_resolved_with_ttr": 15,
+      "mean_ttr_sim_s": 151.0,
+      "median_ttr_sim_s": 120.0,
+      "note": "SIMULATED seconds: detection delay + configured action duration + verification window"
+    }
+  },
+  "safety": {
+    "unsafe_proposals": 13,
+    "prevented_or_escalated": 13,
+    "valid_proposals": 4,
+    "valid_allowed": 4,
+    "note": "deterministic policy test cases, not an adversarial-LLM study"
+  }
+}

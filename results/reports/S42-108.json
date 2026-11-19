@@ -1,0 +1,176 @@
+{
+ "incident_id": "INC-S42-108",
+ "case_id": "S42-108",
+ "synthetic": true,
+ "scenario_type": "failed_remediation",
+ "final_status": "escalated",
+ "escalation_reason": "verification_failed",
+ "engine": "langgraph",
+ "symptoms": [
+  {
+   "service": "frontend",
+   "metric": "latency_ms",
+   "onset_idx": 23,
+   "detect_idx": 26,
+   "peak_z": 54.64,
+   "peak_value": 443.67
+  },
+  {
+   "service": "api-gateway",
+   "metric": "latency_ms",
+   "onset_idx": 23,
+   "detect_idx": 26,
+   "peak_z": 46.87,
+   "peak_value": 582.47
+  },
+  {
+   "service": "api-gateway",
+   "metric": "cpu",
+   "onset_idx": 23,
+   "detect_idx": 26,
+   "peak_z": 23.99,
+   "peak_value": 100.0
+  }
+ ],
+ "correlated_alerts": [
+  "S42-108-A01",
+  "S42-108-A03",
+  "S42-108-A07",
+  "S42-108-A02",
+  "S42-108-A04",
+  "S42-108-A05",
+  "S42-108-A06"
+ ],
+ "root_cause": {
+  "top": "cpu_saturation",
+  "confidence": 0.9655,
+  "margin": 0.9548,
+  "root_service": "api-gateway",
+  "ranked": [
+   [
+    "cpu_saturation",
+    0.9655
+   ],
+   [
+    "dependency_failure",
+    0.0107
+   ],
+   [
+    "memory_leak",
+    0.0107
+   ],
+   [
+    "bad_deployment",
+    0.0065
+   ],
+   [
+    "db_pool_exhaustion",
+    0.0065
+   ]
+  ],
+  "evidence": [
+   "+2.0: CPU anomaly on api-gateway",
+   "+1.5: log: CPU throttling",
+   "+1.0: trace: dominant span is compute",
+   "+0.5: latency symptom present"
+  ],
+  "missing": [],
+  "next_step": "Inspect per-pod CPU and recent traffic; confirm autoscaling headroom.",
+  "uncertain": false
+ },
+ "action": {
+  "action": "scale_out_replicas",
+  "target": "api-gateway",
+  "params": {
+   "replicas": 2
+  },
+  "environment": "sandbox"
+ },
+ "policy": {
+  "allowed": true,
+  "requires_approval": false,
+  "risk": "low",
+  "reason": "allowed"
+ },
+ "execution": {
+  "exec_ok": true,
+  "detail": "[SIMULATED] scale_out_replicas on api-gateway",
+  "duration_s": 60,
+  "post_mode": "unfixed"
+ },
+ "verification": {
+  "overall": "unresolved",
+  "series": [
+   {
+    "service": "frontend",
+    "metric": "latency_ms",
+    "state": "unresolved",
+    "ratio": 0.996,
+    "baseline": 118.88,
+    "peak": 417.54,
+    "post": 416.35
+   },
+   {
+    "service": "api-gateway",
+    "metric": "latency_ms",
+    "state": "unresolved",
+    "ratio": 1.009,
+    "baseline": 119.65,
+    "peak": 565.53,
+    "post": 569.35
+   },
+   {
+    "service": "api-gateway",
+    "metric": "cpu",
+    "state": "unresolved",
+    "ratio": 0.876,
+    "baseline": 35.94,
+    "peak": 92.91,
+    "post": 85.85
+   }
+  ],
+  "verify_window_s": 75
+ },
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "3 sustained anomalies"
+  },
+  {
+   "node": "correlate",
+   "msg": "7 alerts -> 1 groups; incident has 7 alerts"
+  },
+  {
+   "node": "evidence",
+   "msg": "8 logs, 5 traces"
+  },
+  {
+   "node": "rca",
+   "msg": "top=cpu_saturation conf=0.9655 margin=0.9548 uncertain=False"
+  },
+  {
+   "node": "plan",
+   "msg": "scale_out_replicas on api-gateway: allowed (risk=low)"
+  },
+  {
+   "node": "execute",
+   "msg": "[SIMULATED] scale_out_replicas on api-gateway"
+  },
+  {
+   "node": "verify",
+   "msg": "unresolved"
+  },
+  {
+   "node": "escalate",
+   "msg": "verification_failed"
+  },
+  {
+   "node": "report",
+   "msg": "escalated"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "cpu_saturation",
+  "expected_final": "escalated"
+ }
+}

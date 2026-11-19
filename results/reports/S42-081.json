@@ -1,0 +1,118 @@
+{
+ "incident_id": "INC-S42-081",
+ "case_id": "S42-081",
+ "synthetic": true,
+ "scenario_type": "bad_deployment",
+ "final_status": "escalated",
+ "escalation_reason": "high_risk_requires_approval",
+ "engine": "langgraph",
+ "symptoms": [
+  {
+   "service": "payment-service",
+   "metric": "error_rate",
+   "onset_idx": 21,
+   "detect_idx": 24,
+   "peak_z": 122.71,
+   "peak_value": 12.81
+  },
+  {
+   "service": "payment-service",
+   "metric": "latency_ms",
+   "onset_idx": 21,
+   "detect_idx": 24,
+   "peak_z": 36.67,
+   "peak_value": 394.14
+  }
+ ],
+ "correlated_alerts": [
+  "S42-081-A01",
+  "S42-081-A03",
+  "S42-081-A02"
+ ],
+ "root_cause": {
+  "top": "bad_deployment",
+  "confidence": 0.9052,
+  "margin": 0.8601,
+  "root_service": "payment-service",
+  "ranked": [
+   [
+    "bad_deployment",
+    0.9052
+   ],
+   [
+    "cpu_saturation",
+    0.0451
+   ],
+   [
+    "db_pool_exhaustion",
+    0.0166
+   ],
+   [
+    "dependency_failure",
+    0.0166
+   ],
+   [
+    "memory_leak",
+    0.0166
+   ]
+  ],
+  "evidence": [
+   "+2.0: deployment on payment-service v3.2.8 shortly before onset",
+   "+1.5: log: new exception types",
+   "+1.0: error-rate anomaly without resource anomaly"
+  ],
+  "missing": [
+   "no resource-metric anomaly (cpu/mem/pool)"
+  ],
+  "next_step": "Compare error rate before/after the latest deployment; review release diff.",
+  "uncertain": false
+ },
+ "action": {
+  "action": "rollback_deployment",
+  "target": "payment-service",
+  "params": {},
+  "environment": "sandbox"
+ },
+ "policy": {
+  "allowed": true,
+  "requires_approval": true,
+  "risk": "high",
+  "reason": "approval required"
+ },
+ "execution": null,
+ "verification": null,
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "2 sustained anomalies"
+  },
+  {
+   "node": "correlate",
+   "msg": "3 alerts -> 1 groups; incident has 3 alerts"
+  },
+  {
+   "node": "evidence",
+   "msg": "9 logs, 5 traces"
+  },
+  {
+   "node": "rca",
+   "msg": "top=bad_deployment conf=0.9052 margin=0.8601 uncertain=False"
+  },
+  {
+   "node": "plan",
+   "msg": "rollback_deployment on payment-service: approval required (risk=high)"
+  },
+  {
+   "node": "escalate",
+   "msg": "high_risk_requires_approval"
+  },
+  {
+   "node": "report",
+   "msg": "escalated"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "bad_deployment",
+  "expected_final": "escalated"
+ }
+}

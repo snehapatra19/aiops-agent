@@ -1,0 +1,250 @@
+{
+ "incident_id": "INC-S42-065",
+ "case_id": "S42-065",
+ "synthetic": true,
+ "scenario_type": "dependency_failure",
+ "final_status": "resolved",
+ "escalation_reason": null,
+ "engine": "langgraph",
+ "symptoms": [
+  {
+   "service": "cache-redis",
+   "metric": "error_rate",
+   "onset_idx": 23,
+   "detect_idx": 26,
+   "peak_z": 306.33,
+   "peak_value": 60.85
+  },
+  {
+   "service": "cache-redis",
+   "metric": "latency_ms",
+   "onset_idx": 23,
+   "detect_idx": 26,
+   "peak_z": 194.85,
+   "peak_value": 66.44
+  },
+  {
+   "service": "order-service",
+   "metric": "error_rate",
+   "onset_idx": 23,
+   "detect_idx": 26,
+   "peak_z": 78.73,
+   "peak_value": 9.76
+  },
+  {
+   "service": "order-service",
+   "metric": "latency_ms",
+   "onset_idx": 23,
+   "detect_idx": 26,
+   "peak_z": 65.51,
+   "peak_value": 533.35
+  },
+  {
+   "service": "auth-service",
+   "metric": "latency_ms",
+   "onset_idx": 23,
+   "detect_idx": 26,
+   "peak_z": 63.49,
+   "peak_value": 534.61
+  },
+  {
+   "service": "auth-service",
+   "metric": "error_rate",
+   "onset_idx": 23,
+   "detect_idx": 26,
+   "peak_z": 58.36,
+   "peak_value": 9.74
+  },
+  {
+   "service": "api-gateway",
+   "metric": "error_rate",
+   "onset_idx": 23,
+   "detect_idx": 26,
+   "peak_z": 30.58,
+   "peak_value": 6.78
+  }
+ ],
+ "correlated_alerts": [
+  "S42-065-A01",
+  "S42-065-A02",
+  "S42-065-A04",
+  "S42-065-A07",
+  "S42-065-A09",
+  "S42-065-A11",
+  "S42-065-A13",
+  "S42-065-A03",
+  "S42-065-A05",
+  "S42-065-A08",
+  "S42-065-A10",
+  "S42-065-A12",
+  "S42-065-A14",
+  "S42-065-A16",
+  "S42-065-A17",
+  "S42-065-A06",
+  "S42-065-A15"
+ ],
+ "root_cause": {
+  "top": "dependency_failure",
+  "confidence": 0.8029,
+  "margin": 0.6942,
+  "root_service": "cache-redis",
+  "ranked": [
+   [
+    "dependency_failure",
+    0.8029
+   ],
+   [
+    "memory_leak",
+    0.1087
+   ],
+   [
+    "bad_deployment",
+    0.04
+   ],
+   [
+    "cpu_saturation",
+    0.0242
+   ],
+   [
+    "db_pool_exhaustion",
+    0.0242
+   ]
+  ],
+  "evidence": [
+   "+1.5: log: upstream 503 / circuit breaker",
+   "+1.0: alert: dependency_unavailable",
+   "+1.0: errors on >=2 services, no resource anomaly",
+   "+0.5: latency symptom present"
+  ],
+  "missing": [
+   "no resource-metric anomaly (cpu/mem/pool)"
+  ],
+  "next_step": "Check health/readiness of the suspected downstream service.",
+  "uncertain": false
+ },
+ "action": {
+  "action": "restart_service",
+  "target": "cache-redis",
+  "params": {},
+  "environment": "sandbox"
+ },
+ "policy": {
+  "allowed": true,
+  "requires_approval": false,
+  "risk": "medium",
+  "reason": "allowed"
+ },
+ "execution": {
+  "exec_ok": true,
+  "detail": "[SIMULATED] restart_service on cache-redis",
+  "duration_s": 90,
+  "post_mode": "fixed"
+ },
+ "verification": {
+  "overall": "resolved",
+  "series": [
+   {
+    "service": "cache-redis",
+    "metric": "error_rate",
+    "state": "resolved",
+    "ratio": -0.002,
+    "baseline": 0.5,
+    "peak": 60.43,
+    "post": 0.4
+   },
+   {
+    "service": "cache-redis",
+    "metric": "latency_ms",
+    "state": "resolved",
+    "ratio": 0.011,
+    "baseline": 5.96,
+    "peak": 65.9,
+    "post": 6.6
+   },
+   {
+    "service": "order-service",
+    "metric": "error_rate",
+    "state": "resolved",
+    "ratio": -0.012,
+    "baseline": 0.58,
+    "peak": 9.44,
+    "post": 0.47
+   },
+   {
+    "service": "order-service",
+    "metric": "latency_ms",
+    "state": "resolved",
+    "ratio": 0.009,
+    "baseline": 116.14,
+    "peak": 521.66,
+    "post": 119.64
+   },
+   {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "state": "resolved",
+    "ratio": -0.003,
+    "baseline": 121.76,
+    "peak": 528.28,
+    "post": 120.55
+   },
+   {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "state": "resolved",
+    "ratio": -0.007,
+    "baseline": 0.61,
+    "peak": 9.41,
+    "post": 0.55
+   },
+   {
+    "service": "api-gateway",
+    "metric": "error_rate",
+    "state": "resolved",
+    "ratio": -0.014,
+    "baseline": 0.53,
+    "peak": 6.42,
+    "post": 0.45
+   }
+  ],
+  "verify_window_s": 75
+ },
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "7 sustained anomalies"
+  },
+  {
+   "node": "correlate",
+   "msg": "17 alerts -> 1 groups; incident has 17 alerts"
+  },
+  {
+   "node": "evidence",
+   "msg": "17 logs, 6 traces"
+  },
+  {
+   "node": "rca",
+   "msg": "top=dependency_failure conf=0.8029 margin=0.6942 uncertain=False"
+  },
+  {
+   "node": "plan",
+   "msg": "restart_service on cache-redis: allowed (risk=medium)"
+  },
+  {
+   "node": "execute",
+   "msg": "[SIMULATED] restart_service on cache-redis"
+  },
+  {
+   "node": "verify",
+   "msg": "resolved"
+  },
+  {
+   "node": "report",
+   "msg": "resolved"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "dependency_failure",
+  "expected_final": "resolved"
+ }
+}

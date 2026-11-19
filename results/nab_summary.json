@@ -1,0 +1,27 @@
+{
+  "dataset": "NAB realAWSCloudwatch",
+  "series": 17,
+  "results": {
+    "ours": {
+      "windows": 30,
+      "windows_hit": 13,
+      "alarms": 323,
+      "alarms_in_window": 62,
+      "window_recall": 0.433,
+      "alarm_precision": 0.192,
+      "f1": 0.266,
+      "mean_delay_min": 396.5
+    },
+    "static": {
+      "windows": 30,
+      "windows_hit": 23,
+      "alarms": 517,
+      "alarms_in_window": 103,
+      "window_recall": 0.767,
+      "alarm_precision": 0.199,
+      "f1": 0.316,
+      "mean_delay_min": 409.6
+    }
+  },
+  "note": "detection only; thresholds taken from config.py, not tuned on NAB"
+}

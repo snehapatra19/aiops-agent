@@ -1,0 +1,153 @@
+{
+ "incident_id": "INC-S42-090",
+ "case_id": "S42-090",
+ "synthetic": true,
+ "scenario_type": "ambiguous",
+ "final_status": "escalated",
+ "escalation_reason": "uncertain_rca",
+ "engine": "langgraph",
+ "symptoms": [
+  {
+   "service": "payment-service",
+   "metric": "latency_ms",
+   "onset_idx": 24,
+   "detect_idx": 27,
+   "peak_z": 76.45,
+   "peak_value": 1097.18
+  },
+  {
+   "service": "payment-service",
+   "metric": "error_rate",
+   "onset_idx": 24,
+   "detect_idx": 27,
+   "peak_z": 47.88,
+   "peak_value": 6.32
+  },
+  {
+   "service": "db-primary",
+   "metric": "latency_ms",
+   "onset_idx": 24,
+   "detect_idx": 27,
+   "peak_z": 47.01,
+   "peak_value": 117.48
+  },
+  {
+   "service": "api-gateway",
+   "metric": "latency_ms",
+   "onset_idx": 24,
+   "detect_idx": 27,
+   "peak_z": 26.32,
+   "peak_value": 452.44
+  },
+  {
+   "service": "api-gateway",
+   "metric": "error_rate",
+   "onset_idx": 24,
+   "detect_idx": 27,
+   "peak_z": 24.61,
+   "peak_value": 6.29
+  },
+  {
+   "service": "payment-service",
+   "metric": "cpu",
+   "onset_idx": 24,
+   "detect_idx": 27,
+   "peak_z": 12.06,
+   "peak_value": 95.82
+  },
+  {
+   "service": "db-primary",
+   "metric": "pool_util",
+   "onset_idx": 24,
+   "detect_idx": 27,
+   "peak_z": 7.84,
+   "peak_value": 100.0
+  }
+ ],
+ "correlated_alerts": [
+  "S42-090-A01",
+  "S42-090-A03",
+  "S42-090-A04",
+  "S42-090-A09",
+  "S42-090-A10",
+  "S42-090-A12",
+  "S42-090-A13",
+  "S42-090-A02",
+  "S42-090-A16",
+  "S42-090-A05",
+  "S42-090-A06",
+  "S42-090-A07"
+ ],
+ "root_cause": {
+  "top": "cpu_saturation",
+  "confidence": 0.4811,
+  "margin": 0.0,
+  "root_service": "payment-service",
+  "ranked": [
+   [
+    "cpu_saturation",
+    0.4811
+   ],
+   [
+    "db_pool_exhaustion",
+    0.4811
+   ],
+   [
+    "dependency_failure",
+    0.0145
+   ],
+   [
+    "memory_leak",
+    0.0145
+   ],
+   [
+    "bad_deployment",
+    0.0088
+   ]
+  ],
+  "evidence": [
+   "+2.0: CPU anomaly on payment-service",
+   "+1.5: log: CPU throttling",
+   "+0.5: latency symptom present"
+  ],
+  "missing": [
+   "no trace summaries retrieved"
+  ],
+  "next_step": "Inspect per-pod CPU and recent traffic; confirm autoscaling headroom.",
+  "uncertain": true
+ },
+ "action": null,
+ "policy": null,
+ "execution": null,
+ "verification": null,
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "7 sustained anomalies"
+  },
+  {
+   "node": "correlate",
+   "msg": "16 alerts -> 4 groups; incident has 12 alerts"
+  },
+  {
+   "node": "evidence",
+   "msg": "18 logs, 0 traces"
+  },
+  {
+   "node": "rca",
+   "msg": "top=cpu_saturation conf=0.4811 margin=0.0 uncertain=True"
+  },
+  {
+   "node": "escalate",
+   "msg": "uncertain_rca"
+  },
+  {
+   "node": "report",
+   "msg": "escalated"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "cpu_saturation",
+  "expected_final": "escalated"
+ }
+}

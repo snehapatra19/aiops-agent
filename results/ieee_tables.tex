@@ -1,0 +1,126 @@
+\begin{table}[t]
+\centering
+\caption{Case-level incident detection (incident vs. normal).}
+\label{tab:detection}
+\begin{tabular}{lrr}
+\toprule
+Metric & Proposed & Baseline \\
+\midrule
+Precision & 1.000 & 0.893 \\
+Recall & 1.000 & 1.000 \\
+F1 & 1.000 & 0.943 \\
+False-positive rate & 0.000 & 0.600 \\
+TP/FP/TN/FN & 100/0/20/0 & 100/12/8/0 \\
+\bottomrule
+\end{tabular}
+\par\footnotesize Synthetic benchmark, seed 42, 120 cases (dataset hash 2ba5e3286ed0a46b); simulated remediation; all values computed from saved per-case outputs.
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Alert correlation. Pairwise metrics over alert pairs within each case; fewer groups alone is not better.}
+\label{tab:corr}
+\begin{tabular}{lrr}
+\toprule
+Metric & Proposed & Baseline \\
+\midrule
+Pairwise precision & 0.958 & 1.000 \\
+Pairwise recall & 0.953 & 0.381 \\
+Pairwise F1 & 0.956 & 0.551 \\
+Exact-partition rate & 0.775 & 0.433 \\
+Alerts $\to$ groups & 925$\to$161 & 925$\to$275 \\
+True groups & 165 & 165 \\
+\bottomrule
+\end{tabular}
+\par\footnotesize Synthetic benchmark, seed 42, 120 cases (dataset hash 2ba5e3286ed0a46b); simulated remediation; all values computed from saved per-case outputs.
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Root-cause analysis on the 100 incident cases (undetected counts as wrong).}
+\label{tab:rca}
+\begin{tabular}{lrr}
+\toprule
+Metric & Proposed & Baseline \\
+\midrule
+Top-1 accuracy & 0.900 & 0.450 \\
+Top-3 accuracy & 0.980 & n/a \\
+Root-service accuracy & 0.920 & 0.200 \\
+Uncertain (escalated) cases & 16 & 0 \\
+Selective top-1 (confident only) & 0.988 & 0.450 \\
+\bottomrule
+\end{tabular}
+\par\footnotesize Synthetic benchmark, seed 42, 120 cases (dataset hash 2ba5e3286ed0a46b); simulated remediation; all values computed from saved per-case outputs.
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Remediation, verification and escalation. Baseline never verifies, so it 'claims' success when the command returns OK.}
+\label{tab:remed}
+\begin{tabular}{lrr}
+\toprule
+Metric & Proposed & Baseline \\
+\midrule
+Actions executed & 68 & 83 \\
+Actually effective (simulator truth) & 55 & 15 \\
+Claimed resolved & 55 & 83 \\
+False-resolution claims / claimed & 0/55 & 68/83 \\
+Escalation rate (of all cases) & 0.375 & 0.242 \\
+Executed on expected-escalation cases & 14/46 & 34/46 \\
+Final-decision accuracy & 0.992 & 0.542 \\
+\bottomrule
+\end{tabular}
+\par\footnotesize Synthetic benchmark, seed 42, 120 cases (dataset hash 2ba5e3286ed0a46b); simulated remediation; all values computed from saved per-case outputs.
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Variability across five generator seeds (mean, std) on synthetic data; not a real-world confidence interval.}
+\label{tab:seeds}
+\begin{tabular}{lrr}
+\toprule
+Method: metric & Mean & Std \\
+\midrule
+proposed: detection f1 & 1.000 & 0.000 \\
+proposed: detection precision & 1.000 & 0.000 \\
+proposed: detection recall & 1.000 & 0.000 \\
+proposed: correlation pair\_f1 & 0.959 & 0.011 \\
+proposed: correlation pair\_precision & 0.952 & 0.010 \\
+proposed: correlation pair\_recall & 0.965 & 0.015 \\
+proposed: rca top1\_acc & 0.880 & 0.021 \\
+proposed: rca selective\_top1\_acc & 0.988 & 0.008 \\
+proposed: remediation false\_resolution\_rate & 0.000 & 0.000 \\
+proposed: remediation final\_decision\_accuracy & 0.988 & 0.013 \\
+proposed: remediation escalation\_rate & 0.375 & 0.010 \\
+proposed: time mean\_ttr\_sim\_s & 199.220 & 0.965 \\
+baseline: detection f1 & 0.941 & 0.015 \\
+baseline: detection precision & 0.889 & 0.026 \\
+baseline: detection recall & 1.000 & 0.000 \\
+baseline: correlation pair\_f1 & 0.558 & 0.010 \\
+baseline: correlation pair\_precision & 0.999 & 0.001 \\
+baseline: correlation pair\_recall & 0.387 & 0.010 \\
+baseline: rca top1\_acc & 0.392 & 0.043 \\
+baseline: rca selective\_top1\_acc & 0.392 & 0.043 \\
+baseline: remediation false\_resolution\_rate & 0.836 & 0.030 \\
+baseline: remediation final\_decision\_accuracy & 0.522 & 0.047 \\
+baseline: remediation escalation\_rate & 0.258 & 0.020 \\
+baseline: time mean\_ttr\_sim\_s & 160.800 & 17.651 \\
+\bottomrule
+\end{tabular}
+\par\footnotesize Seeds [42, 43, 44, 45, 46].
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Policy safety test.}
+\label{tab:safety}
+\begin{tabular}{lr}
+\toprule
+Test set & Result \\
+\midrule
+Unsafe/high-risk proposals blocked or escalated & 13/13 \\
+Valid proposals allowed & 4/4 \\
+\bottomrule
+\end{tabular}
+\par\footnotesize deterministic policy test cases, not an adversarial-LLM study
+\end{table}

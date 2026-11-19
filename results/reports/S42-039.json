@@ -1,0 +1,213 @@
+{
+ "incident_id": "INC-S42-039",
+ "case_id": "S42-039",
+ "synthetic": true,
+ "scenario_type": "db_pool_exhaustion",
+ "final_status": "resolved",
+ "escalation_reason": null,
+ "engine": "langgraph",
+ "symptoms": [
+  {
+   "service": "db-primary",
+   "metric": "latency_ms",
+   "onset_idx": 20,
+   "detect_idx": 23,
+   "peak_z": 42.4,
+   "peak_value": 117.53
+  },
+  {
+   "service": "payment-service",
+   "metric": "error_rate",
+   "onset_idx": 20,
+   "detect_idx": 23,
+   "peak_z": 40.31,
+   "peak_value": 6.29
+  },
+  {
+   "service": "payment-service",
+   "metric": "latency_ms",
+   "onset_idx": 20,
+   "detect_idx": 23,
+   "peak_z": 37.48,
+   "peak_value": 632.21
+  },
+  {
+   "service": "api-gateway",
+   "metric": "error_rate",
+   "onset_idx": 20,
+   "detect_idx": 23,
+   "peak_z": 33.87,
+   "peak_value": 6.17
+  },
+  {
+   "service": "db-primary",
+   "metric": "pool_util",
+   "onset_idx": 20,
+   "detect_idx": 23,
+   "peak_z": 8.78,
+   "peak_value": 100.0
+  }
+ ],
+ "correlated_alerts": [
+  "S42-039-A01",
+  "S42-039-A03",
+  "S42-039-A05",
+  "S42-039-A08",
+  "S42-039-A09",
+  "S42-039-A02",
+  "S42-039-A06",
+  "S42-039-A15",
+  "S42-039-A04",
+  "S42-039-A10",
+  "S42-039-A11",
+  "S42-039-A12",
+  "S42-039-A13",
+  "S42-039-A14"
+ ],
+ "root_cause": {
+  "top": "db_pool_exhaustion",
+  "confidence": 0.927,
+  "margin": 0.8809,
+  "root_service": "db-primary",
+  "ranked": [
+   [
+    "db_pool_exhaustion",
+    0.927
+   ],
+   [
+    "memory_leak",
+    0.0462
+   ],
+   [
+    "cpu_saturation",
+    0.0103
+   ],
+   [
+    "dependency_failure",
+    0.0103
+   ],
+   [
+    "bad_deployment",
+    0.0062
+   ]
+  ],
+  "evidence": [
+   "+2.0: DB pool utilisation anomaly",
+   "+1.5: log: DB connection timeout/pool exhausted",
+   "+1.0: trace: dominant span is DB",
+   "+0.5: latency on a DB-dependent service"
+  ],
+  "missing": [],
+  "next_step": "Check active DB connections and pool settings on db-primary.",
+  "uncertain": false
+ },
+ "action": {
+  "action": "increase_db_pool_size",
+  "target": "db-primary",
+  "params": {
+   "pool_size": 100
+  },
+  "environment": "sandbox"
+ },
+ "policy": {
+  "allowed": true,
+  "requires_approval": false,
+  "risk": "low",
+  "reason": "allowed"
+ },
+ "execution": {
+  "exec_ok": true,
+  "detail": "[SIMULATED] increase_db_pool_size on db-primary",
+  "duration_s": 30,
+  "post_mode": "fixed"
+ },
+ "verification": {
+  "overall": "resolved",
+  "series": [
+   {
+    "service": "db-primary",
+    "metric": "latency_ms",
+    "state": "resolved",
+    "ratio": -0.003,
+    "baseline": 23.71,
+    "peak": 113.67,
+    "post": 23.44
+   },
+   {
+    "service": "payment-service",
+    "metric": "error_rate",
+    "state": "resolved",
+    "ratio": -0.012,
+    "baseline": 0.49,
+    "peak": 6.07,
+    "post": 0.42
+   },
+   {
+    "service": "payment-service",
+    "metric": "latency_ms",
+    "state": "resolved",
+    "ratio": 0.015,
+    "baseline": 114.87,
+    "peak": 618.36,
+    "post": 122.27
+   },
+   {
+    "service": "api-gateway",
+    "metric": "error_rate",
+    "state": "resolved",
+    "ratio": 0.011,
+    "baseline": 0.5,
+    "peak": 5.94,
+    "post": 0.57
+   },
+   {
+    "service": "db-primary",
+    "metric": "pool_util",
+    "state": "resolved",
+    "ratio": 0.021,
+    "baseline": 41.03,
+    "peak": 92.85,
+    "post": 42.11
+   }
+  ],
+  "verify_window_s": 75
+ },
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "5 sustained anomalies"
+  },
+  {
+   "node": "correlate",
+   "msg": "15 alerts -> 2 groups; incident has 14 alerts"
+  },
+  {
+   "node": "evidence",
+   "msg": "11 logs, 3 traces"
+  },
+  {
+   "node": "rca",
+   "msg": "top=db_pool_exhaustion conf=0.927 margin=0.8809 uncertain=False"
+  },
+  {
+   "node": "plan",
+   "msg": "increase_db_pool_size on db-primary: allowed (risk=low)"
+  },
+  {
+   "node": "execute",
+   "msg": "[SIMULATED] increase_db_pool_size on db-primary"
+  },
+  {
+   "node": "verify",
+   "msg": "resolved"
+  },
+  {
+   "node": "report",
+   "msg": "resolved"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "db_pool_exhaustion",
+  "expected_final": "resolved"
+ }
+}

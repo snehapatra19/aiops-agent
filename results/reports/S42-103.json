@@ -1,0 +1,135 @@
+{
+ "incident_id": "INC-S42-103",
+ "case_id": "S42-103",
+ "synthetic": true,
+ "scenario_type": "action_unavailable",
+ "final_status": "escalated",
+ "escalation_reason": "action_unavailable",
+ "engine": "langgraph",
+ "symptoms": [
+  {
+   "service": "payment-service",
+   "metric": "latency_ms",
+   "onset_idx": 23,
+   "detect_idx": 26,
+   "peak_z": 48.01,
+   "peak_value": 585.05
+  },
+  {
+   "service": "api-gateway",
+   "metric": "latency_ms",
+   "onset_idx": 23,
+   "detect_idx": 26,
+   "peak_z": 24.09,
+   "peak_value": 441.7
+  },
+  {
+   "service": "payment-service",
+   "metric": "cpu",
+   "onset_idx": 23,
+   "detect_idx": 26,
+   "peak_z": 12.23,
+   "peak_value": 99.95
+  }
+ ],
+ "correlated_alerts": [
+  "S42-103-A01",
+  "S42-103-A04",
+  "S42-103-A07",
+  "S42-103-A02",
+  "S42-103-A05",
+  "S42-103-A03",
+  "S42-103-A06"
+ ],
+ "root_cause": {
+  "top": "cpu_saturation",
+  "confidence": 0.9615,
+  "margin": 0.9508,
+  "root_service": "payment-service",
+  "ranked": [
+   [
+    "cpu_saturation",
+    0.9615
+   ],
+   [
+    "db_pool_exhaustion",
+    0.0107
+   ],
+   [
+    "dependency_failure",
+    0.0107
+   ],
+   [
+    "memory_leak",
+    0.0107
+   ],
+   [
+    "bad_deployment",
+    0.0065
+   ]
+  ],
+  "evidence": [
+   "+2.0: CPU anomaly on payment-service",
+   "+1.5: log: CPU throttling",
+   "+1.0: trace: dominant span is compute",
+   "+0.5: latency symptom present"
+  ],
+  "missing": [],
+  "next_step": "Inspect per-pod CPU and recent traffic; confirm autoscaling headroom.",
+  "uncertain": false
+ },
+ "action": {
+  "action": "scale_out_replicas",
+  "target": "payment-service",
+  "params": {
+   "replicas": 2
+  },
+  "environment": "sandbox"
+ },
+ "policy": {
+  "allowed": true,
+  "requires_approval": false,
+  "risk": "low",
+  "reason": "allowed"
+ },
+ "execution": null,
+ "verification": null,
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "3 sustained anomalies"
+  },
+  {
+   "node": "correlate",
+   "msg": "7 alerts -> 1 groups; incident has 7 alerts"
+  },
+  {
+   "node": "evidence",
+   "msg": "8 logs, 4 traces"
+  },
+  {
+   "node": "rca",
+   "msg": "top=cpu_saturation conf=0.9615 margin=0.9508 uncertain=False"
+  },
+  {
+   "node": "plan",
+   "msg": "scale_out_replicas on payment-service: allowed (risk=low)"
+  },
+  {
+   "node": "execute",
+   "msg": "scale_out_replicas unavailable (e.g. capacity/quota limit)"
+  },
+  {
+   "node": "escalate",
+   "msg": "action_unavailable"
+  },
+  {
+   "node": "report",
+   "msg": "escalated"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "cpu_saturation",
+  "expected_final": "escalated"
+ }
+}

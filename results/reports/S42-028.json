@@ -1,0 +1,176 @@
+{
+ "incident_id": "INC-S42-028",
+ "case_id": "S42-028",
+ "synthetic": true,
+ "scenario_type": "cpu_saturation",
+ "final_status": "resolved",
+ "escalation_reason": null,
+ "engine": "langgraph",
+ "symptoms": [
+  {
+   "service": "auth-service",
+   "metric": "latency_ms",
+   "onset_idx": 21,
+   "detect_idx": 24,
+   "peak_z": 47.72,
+   "peak_value": 585.6
+  },
+  {
+   "service": "api-gateway",
+   "metric": "latency_ms",
+   "onset_idx": 21,
+   "detect_idx": 24,
+   "peak_z": 21.2,
+   "peak_value": 431.44
+  },
+  {
+   "service": "auth-service",
+   "metric": "cpu",
+   "onset_idx": 21,
+   "detect_idx": 24,
+   "peak_z": 20.89,
+   "peak_value": 98.56
+  }
+ ],
+ "correlated_alerts": [
+  "S42-028-A01",
+  "S42-028-A09",
+  "S42-028-A04",
+  "S42-028-A10",
+  "S42-028-A05",
+  "S42-028-A02",
+  "S42-028-A03",
+  "S42-028-A06",
+  "S42-028-A07",
+  "S42-028-A08"
+ ],
+ "root_cause": {
+  "top": "cpu_saturation",
+  "confidence": 0.8318,
+  "margin": 0.7193,
+  "root_service": "auth-service",
+  "ranked": [
+   [
+    "cpu_saturation",
+    0.8318
+   ],
+   [
+    "dependency_failure",
+    0.1126
+   ],
+   [
+    "memory_leak",
+    0.0251
+   ],
+   [
+    "bad_deployment",
+    0.0152
+   ],
+   [
+    "db_pool_exhaustion",
+    0.0152
+   ]
+  ],
+  "evidence": [
+   "+2.0: CPU anomaly on auth-service",
+   "+1.5: log: CPU throttling",
+   "+0.5: latency symptom present"
+  ],
+  "missing": [
+   "no trace summaries retrieved"
+  ],
+  "next_step": "Inspect per-pod CPU and recent traffic; confirm autoscaling headroom.",
+  "uncertain": false
+ },
+ "action": {
+  "action": "scale_out_replicas",
+  "target": "auth-service",
+  "params": {
+   "replicas": 2
+  },
+  "environment": "sandbox"
+ },
+ "policy": {
+  "allowed": true,
+  "requires_approval": false,
+  "risk": "low",
+  "reason": "allowed"
+ },
+ "execution": {
+  "exec_ok": true,
+  "detail": "[SIMULATED] scale_out_replicas on auth-service",
+  "duration_s": 60,
+  "post_mode": "fixed"
+ },
+ "verification": {
+  "overall": "resolved",
+  "series": [
+   {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "state": "resolved",
+    "ratio": -0.001,
+    "baseline": 123.86,
+    "peak": 573.74,
+    "post": 123.39
+   },
+   {
+    "service": "api-gateway",
+    "metric": "latency_ms",
+    "state": "resolved",
+    "ratio": -0.034,
+    "baseline": 122.95,
+    "peak": 418.19,
+    "post": 112.95
+   },
+   {
+    "service": "auth-service",
+    "metric": "cpu",
+    "state": "resolved",
+    "ratio": -0.054,
+    "baseline": 34.38,
+    "peak": 88.15,
+    "post": 31.46
+   }
+  ],
+  "verify_window_s": 75
+ },
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "3 sustained anomalies"
+  },
+  {
+   "node": "correlate",
+   "msg": "10 alerts -> 1 groups; incident has 10 alerts"
+  },
+  {
+   "node": "evidence",
+   "msg": "9 logs, 0 traces"
+  },
+  {
+   "node": "rca",
+   "msg": "top=cpu_saturation conf=0.8318 margin=0.7193 uncertain=False"
+  },
+  {
+   "node": "plan",
+   "msg": "scale_out_replicas on auth-service: allowed (risk=low)"
+  },
+  {
+   "node": "execute",
+   "msg": "[SIMULATED] scale_out_replicas on auth-service"
+  },
+  {
+   "node": "verify",
+   "msg": "resolved"
+  },
+  {
+   "node": "report",
+   "msg": "resolved"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "cpu_saturation",
+  "expected_final": "resolved"
+ }
+}

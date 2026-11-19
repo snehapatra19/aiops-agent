@@ -1,0 +1,171 @@
+{
+ "incident_id": "INC-S42-064",
+ "case_id": "S42-064",
+ "synthetic": true,
+ "scenario_type": "dependency_failure",
+ "final_status": "resolved",
+ "escalation_reason": null,
+ "engine": "langgraph",
+ "symptoms": [
+  {
+   "service": "auth-service",
+   "metric": "error_rate",
+   "onset_idx": 22,
+   "detect_idx": 25,
+   "peak_z": 602.89,
+   "peak_value": 60.83
+  },
+  {
+   "service": "api-gateway",
+   "metric": "error_rate",
+   "onset_idx": 22,
+   "detect_idx": 25,
+   "peak_z": 151.04,
+   "peak_value": 15.69
+  },
+  {
+   "service": "api-gateway",
+   "metric": "latency_ms",
+   "onset_idx": 22,
+   "detect_idx": 25,
+   "peak_z": 32.91,
+   "peak_value": 542.92
+  }
+ ],
+ "correlated_alerts": [
+  "S42-064-A01",
+  "S42-064-A02",
+  "S42-064-A03",
+  "S42-064-A04",
+  "S42-064-A06",
+  "S42-064-A05"
+ ],
+ "root_cause": {
+  "top": "dependency_failure",
+  "confidence": 0.6346,
+  "margin": 0.493,
+  "root_service": "auth-service",
+  "ranked": [
+   [
+    "dependency_failure",
+    0.6346
+   ],
+   [
+    "bad_deployment",
+    0.1416
+   ],
+   [
+    "cpu_saturation",
+    0.0859
+   ],
+   [
+    "memory_leak",
+    0.0859
+   ],
+   [
+    "db_pool_exhaustion",
+    0.0521
+   ]
+  ],
+  "evidence": [
+   "+1.0: alert: dependency_unavailable",
+   "+1.0: errors on >=2 services, no resource anomaly",
+   "+0.5: latency symptom present"
+  ],
+  "missing": [
+   "no error/warn logs retrieved",
+   "no resource-metric anomaly (cpu/mem/pool)"
+  ],
+  "next_step": "Check health/readiness of the suspected downstream service.",
+  "uncertain": false
+ },
+ "action": {
+  "action": "restart_service",
+  "target": "auth-service",
+  "params": {},
+  "environment": "sandbox"
+ },
+ "policy": {
+  "allowed": true,
+  "requires_approval": false,
+  "risk": "medium",
+  "reason": "allowed"
+ },
+ "execution": {
+  "exec_ok": true,
+  "detail": "[SIMULATED] restart_service on auth-service",
+  "duration_s": 90,
+  "post_mode": "fixed"
+ },
+ "verification": {
+  "overall": "resolved",
+  "series": [
+   {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "state": "resolved",
+    "ratio": -0.0,
+    "baseline": 0.54,
+    "peak": 60.49,
+    "post": 0.52
+   },
+   {
+    "service": "api-gateway",
+    "metric": "error_rate",
+    "state": "resolved",
+    "ratio": -0.012,
+    "baseline": 0.59,
+    "peak": 15.48,
+    "post": 0.41
+   },
+   {
+    "service": "api-gateway",
+    "metric": "latency_ms",
+    "state": "resolved",
+    "ratio": -0.011,
+    "baseline": 124.45,
+    "peak": 528.83,
+    "post": 119.92
+   }
+  ],
+  "verify_window_s": 75
+ },
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "3 sustained anomalies"
+  },
+  {
+   "node": "correlate",
+   "msg": "6 alerts -> 1 groups; incident has 6 alerts"
+  },
+  {
+   "node": "evidence",
+   "msg": "0 logs, 3 traces"
+  },
+  {
+   "node": "rca",
+   "msg": "top=dependency_failure conf=0.6346 margin=0.493 uncertain=False"
+  },
+  {
+   "node": "plan",
+   "msg": "restart_service on auth-service: allowed (risk=medium)"
+  },
+  {
+   "node": "execute",
+   "msg": "[SIMULATED] restart_service on auth-service"
+  },
+  {
+   "node": "verify",
+   "msg": "resolved"
+  },
+  {
+   "node": "report",
+   "msg": "resolved"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "dependency_failure",
+  "expected_final": "resolved"
+ }
+}

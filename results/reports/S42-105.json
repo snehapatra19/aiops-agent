@@ -1,0 +1,129 @@
+{
+ "incident_id": "INC-S42-105",
+ "case_id": "S42-105",
+ "synthetic": true,
+ "scenario_type": "action_unavailable",
+ "final_status": "escalated",
+ "escalation_reason": "action_unavailable",
+ "engine": "langgraph",
+ "symptoms": [
+  {
+   "service": "api-gateway",
+   "metric": "latency_ms",
+   "onset_idx": 27,
+   "detect_idx": 30,
+   "peak_z": 42.55,
+   "peak_value": 437.23
+  },
+  {
+   "service": "api-gateway",
+   "metric": "mem",
+   "onset_idx": 27,
+   "detect_idx": 30,
+   "peak_z": 20.45,
+   "peak_value": 100.0
+  },
+  {
+   "service": "api-gateway",
+   "metric": "error_rate",
+   "onset_idx": 30,
+   "detect_idx": 33,
+   "peak_z": 19.56,
+   "peak_value": 3.68
+  }
+ ],
+ "correlated_alerts": [
+  "S42-105-A01",
+  "S42-105-A02",
+  "S42-105-A03"
+ ],
+ "root_cause": {
+  "top": "memory_leak",
+  "confidence": 0.9308,
+  "margin": 0.8844,
+  "root_service": "api-gateway",
+  "ranked": [
+   [
+    "memory_leak",
+    0.9308
+   ],
+   [
+    "cpu_saturation",
+    0.0463
+   ],
+   [
+    "dependency_failure",
+    0.0103
+   ],
+   [
+    "bad_deployment",
+    0.0063
+   ],
+   [
+    "db_pool_exhaustion",
+    0.0063
+   ]
+  ],
+  "evidence": [
+   "+2.0: memory anomaly on api-gateway",
+   "+1.5: log: GC/OOM",
+   "+1.0: trace: dominant span is GC",
+   "+0.5: latency symptom present"
+  ],
+  "missing": [],
+  "next_step": "Capture heap profile and check memory growth trend over the last hours.",
+  "uncertain": false
+ },
+ "action": {
+  "action": "restart_service",
+  "target": "api-gateway",
+  "params": {},
+  "environment": "sandbox"
+ },
+ "policy": {
+  "allowed": true,
+  "requires_approval": false,
+  "risk": "medium",
+  "reason": "allowed"
+ },
+ "execution": null,
+ "verification": null,
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "3 sustained anomalies"
+  },
+  {
+   "node": "correlate",
+   "msg": "3 alerts -> 1 groups; incident has 3 alerts"
+  },
+  {
+   "node": "evidence",
+   "msg": "8 logs, 5 traces"
+  },
+  {
+   "node": "rca",
+   "msg": "top=memory_leak conf=0.9308 margin=0.8844 uncertain=False"
+  },
+  {
+   "node": "plan",
+   "msg": "restart_service on api-gateway: allowed (risk=medium)"
+  },
+  {
+   "node": "execute",
+   "msg": "restart_service unavailable (e.g. capacity/quota limit)"
+  },
+  {
+   "node": "escalate",
+   "msg": "action_unavailable"
+  },
+  {
+   "node": "report",
+   "msg": "escalated"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "memory_leak",
+  "expected_final": "escalated"
+ }
+}

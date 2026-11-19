@@ -1,0 +1,95 @@
+{
+ "incident_id": "INC-S42-096",
+ "case_id": "S42-096",
+ "synthetic": true,
+ "scenario_type": "missing_evidence",
+ "final_status": "escalated",
+ "escalation_reason": "uncertain_rca",
+ "engine": "langgraph",
+ "symptoms": [
+  {
+   "service": "api-gateway",
+   "metric": "latency_ms",
+   "onset_idx": 23,
+   "detect_idx": 26,
+   "peak_z": 33.56,
+   "peak_value": 545.71
+  }
+ ],
+ "correlated_alerts": [
+  "S42-096-A01",
+  "S42-096-A02"
+ ],
+ "root_cause": {
+  "top": "cpu_saturation",
+  "confidence": 0.2374,
+  "margin": 0.0,
+  "root_service": "api-gateway",
+  "ranked": [
+   [
+    "cpu_saturation",
+    0.2374
+   ],
+   [
+    "dependency_failure",
+    0.2374
+   ],
+   [
+    "memory_leak",
+    0.2374
+   ],
+   [
+    "bad_deployment",
+    0.144
+   ],
+   [
+    "db_pool_exhaustion",
+    0.144
+   ]
+  ],
+  "evidence": [
+   "+0.5: latency symptom present"
+  ],
+  "missing": [
+   "no error/warn logs retrieved",
+   "no trace summaries retrieved",
+   "no resource-metric anomaly (cpu/mem/pool)"
+  ],
+  "next_step": "Inspect per-pod CPU and recent traffic; confirm autoscaling headroom.",
+  "uncertain": true
+ },
+ "action": null,
+ "policy": null,
+ "execution": null,
+ "verification": null,
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "1 sustained anomalies"
+  },
+  {
+   "node": "correlate",
+   "msg": "2 alerts -> 1 groups; incident has 2 alerts"
+  },
+  {
+   "node": "evidence",
+   "msg": "0 logs, 0 traces"
+  },
+  {
+   "node": "rca",
+   "msg": "top=cpu_saturation conf=0.2374 margin=0.0 uncertain=True"
+  },
+  {
+   "node": "escalate",
+   "msg": "uncertain_rca"
+  },
+  {
+   "node": "report",
+   "msg": "escalated"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "dependency_failure",
+  "expected_final": "escalated"
+ }
+}

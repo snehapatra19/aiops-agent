@@ -1,0 +1,207 @@
+{
+ "incident_id": "INC-S42-046",
+ "case_id": "S42-046",
+ "synthetic": true,
+ "scenario_type": "db_pool_exhaustion",
+ "final_status": "resolved",
+ "escalation_reason": null,
+ "engine": "langgraph",
+ "symptoms": [
+  {
+   "service": "payment-service",
+   "metric": "latency_ms",
+   "onset_idx": 22,
+   "detect_idx": 25,
+   "peak_z": 64.21,
+   "peak_value": 639.87
+  },
+  {
+   "service": "payment-service",
+   "metric": "error_rate",
+   "onset_idx": 22,
+   "detect_idx": 25,
+   "peak_z": 57.32,
+   "peak_value": 6.24
+  },
+  {
+   "service": "db-primary",
+   "metric": "latency_ms",
+   "onset_idx": 22,
+   "detect_idx": 25,
+   "peak_z": 46.93,
+   "peak_value": 118.35
+  },
+  {
+   "service": "api-gateway",
+   "metric": "error_rate",
+   "onset_idx": 22,
+   "detect_idx": 25,
+   "peak_z": 28.0,
+   "peak_value": 6.35
+  },
+  {
+   "service": "db-primary",
+   "metric": "pool_util",
+   "onset_idx": 22,
+   "detect_idx": 25,
+   "peak_z": 12.72,
+   "peak_value": 100.0
+  }
+ ],
+ "correlated_alerts": [
+  "S42-046-A01",
+  "S42-046-A03",
+  "S42-046-A05",
+  "S42-046-A06",
+  "S42-046-A07",
+  "S42-046-A04",
+  "S42-046-A11",
+  "S42-046-A02"
+ ],
+ "root_cause": {
+  "top": "db_pool_exhaustion",
+  "confidence": 0.9615,
+  "margin": 0.9508,
+  "root_service": "db-primary",
+  "ranked": [
+   [
+    "db_pool_exhaustion",
+    0.9615
+   ],
+   [
+    "cpu_saturation",
+    0.0107
+   ],
+   [
+    "dependency_failure",
+    0.0107
+   ],
+   [
+    "memory_leak",
+    0.0107
+   ],
+   [
+    "bad_deployment",
+    0.0065
+   ]
+  ],
+  "evidence": [
+   "+2.0: DB pool utilisation anomaly",
+   "+1.5: log: DB connection timeout/pool exhausted",
+   "+1.0: trace: dominant span is DB",
+   "+0.5: latency on a DB-dependent service"
+  ],
+  "missing": [],
+  "next_step": "Check active DB connections and pool settings on db-primary.",
+  "uncertain": false
+ },
+ "action": {
+  "action": "increase_db_pool_size",
+  "target": "db-primary",
+  "params": {
+   "pool_size": 100
+  },
+  "environment": "sandbox"
+ },
+ "policy": {
+  "allowed": true,
+  "requires_approval": false,
+  "risk": "low",
+  "reason": "allowed"
+ },
+ "execution": {
+  "exec_ok": true,
+  "detail": "[SIMULATED] increase_db_pool_size on db-primary",
+  "duration_s": 30,
+  "post_mode": "fixed"
+ },
+ "verification": {
+  "overall": "resolved",
+  "series": [
+   {
+    "service": "payment-service",
+    "metric": "latency_ms",
+    "state": "resolved",
+    "ratio": -0.019,
+    "baseline": 122.73,
+    "peak": 626.29,
+    "post": 113.03
+   },
+   {
+    "service": "payment-service",
+    "metric": "error_rate",
+    "state": "resolved",
+    "ratio": -0.01,
+    "baseline": 0.5,
+    "peak": 5.96,
+    "post": 0.45
+   },
+   {
+    "service": "db-primary",
+    "metric": "latency_ms",
+    "state": "resolved",
+    "ratio": -0.004,
+    "baseline": 23.73,
+    "peak": 114.03,
+    "post": 23.33
+   },
+   {
+    "service": "api-gateway",
+    "metric": "error_rate",
+    "state": "resolved",
+    "ratio": 0.03,
+    "baseline": 0.46,
+    "peak": 5.88,
+    "post": 0.62
+   },
+   {
+    "service": "db-primary",
+    "metric": "pool_util",
+    "state": "resolved",
+    "ratio": 0.062,
+    "baseline": 40.54,
+    "peak": 92.87,
+    "post": 43.81
+   }
+  ],
+  "verify_window_s": 75
+ },
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "5 sustained anomalies"
+  },
+  {
+   "node": "correlate",
+   "msg": "11 alerts -> 2 groups; incident has 8 alerts"
+  },
+  {
+   "node": "evidence",
+   "msg": "10 logs, 4 traces"
+  },
+  {
+   "node": "rca",
+   "msg": "top=db_pool_exhaustion conf=0.9615 margin=0.9508 uncertain=False"
+  },
+  {
+   "node": "plan",
+   "msg": "increase_db_pool_size on db-primary: allowed (risk=low)"
+  },
+  {
+   "node": "execute",
+   "msg": "[SIMULATED] increase_db_pool_size on db-primary"
+  },
+  {
+   "node": "verify",
+   "msg": "resolved"
+  },
+  {
+   "node": "report",
+   "msg": "resolved"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "db_pool_exhaustion",
+  "expected_final": "resolved"
+ }
+}

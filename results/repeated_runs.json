@@ -1,0 +1,301 @@
+{
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "main_seed": 42,
+  "repeated": {
+    "proposed.detection.f1": {
+      "mean": 1.0,
+      "std": 0.0,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 1.0,
+        "43": 1.0,
+        "44": 1.0,
+        "45": 1.0,
+        "46": 1.0
+      }
+    },
+    "proposed.detection.precision": {
+      "mean": 1.0,
+      "std": 0.0,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 1.0,
+        "43": 1.0,
+        "44": 1.0,
+        "45": 1.0,
+        "46": 1.0
+      }
+    },
+    "proposed.detection.recall": {
+      "mean": 1.0,
+      "std": 0.0,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 1.0,
+        "43": 1.0,
+        "44": 1.0,
+        "45": 1.0,
+        "46": 1.0
+      }
+    },
+    "proposed.correlation.pair_f1": {
+      "mean": 0.9586,
+      "std": 0.0114,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 0.9555,
+        "43": 0.9695,
+        "44": 0.9707,
+        "45": 0.9438,
+        "46": 0.9534
+      }
+    },
+    "proposed.correlation.pair_precision": {
+      "mean": 0.9521,
+      "std": 0.0103,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 0.9582,
+        "43": 0.9621,
+        "44": 0.958,
+        "45": 0.9392,
+        "46": 0.9429
+      }
+    },
+    "proposed.correlation.pair_recall": {
+      "mean": 0.9652,
+      "std": 0.0152,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 0.9528,
+        "43": 0.9771,
+        "44": 0.9837,
+        "45": 0.9484,
+        "46": 0.9641
+      }
+    },
+    "proposed.rca.top1_acc": {
+      "mean": 0.88,
+      "std": 0.0212,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 0.9,
+        "43": 0.88,
+        "44": 0.85,
+        "45": 0.9,
+        "46": 0.87
+      }
+    },
+    "proposed.rca.selective_top1_acc": {
+      "mean": 0.9881,
+      "std": 0.0084,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 0.9881,
+        "43": 1.0,
+        "44": 0.988,
+        "45": 0.9884,
+        "46": 0.9762
+      }
+    },
+    "proposed.remediation.false_resolution_rate": {
+      "mean": 0.0,
+      "std": 0.0,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 0.0,
+        "43": 0.0,
+        "44": 0.0,
+        "45": 0.0,
+        "46": 0.0
+      }
+    },
+    "proposed.remediation.final_decision_accuracy": {
+      "mean": 0.9883,
+      "std": 0.0126,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 0.9917,
+        "43": 0.975,
+        "44": 1.0,
+        "45": 0.975,
+        "46": 1.0
+      }
+    },
+    "proposed.remediation.escalation_rate": {
+      "mean": 0.375,
+      "std": 0.0102,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 0.375,
+        "43": 0.375,
+        "44": 0.3833,
+        "45": 0.3583,
+        "46": 0.3833
+      }
+    },
+    "proposed.time.mean_ttr_sim_s": {
+      "mean": 199.22,
+      "std": 0.9654,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 199.9,
+        "43": 199.4,
+        "44": 199.2,
+        "45": 197.6,
+        "46": 200.0
+      }
+    },
+    "baseline.detection.f1": {
+      "mean": 0.9409,
+      "std": 0.0145,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 0.9434,
+        "43": 0.9569,
+        "44": 0.9259,
+        "45": 0.9259,
+        "46": 0.9524
+      }
+    },
+    "baseline.detection.precision": {
+      "mean": 0.8887,
+      "std": 0.0258,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 0.8929,
+        "43": 0.9174,
+        "44": 0.8621,
+        "45": 0.8621,
+        "46": 0.9091
+      }
+    },
+    "baseline.detection.recall": {
+      "mean": 1.0,
+      "std": 0.0,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 1.0,
+        "43": 1.0,
+        "44": 1.0,
+        "45": 1.0,
+        "46": 1.0
+      }
+    },
+    "baseline.correlation.pair_f1": {
+      "mean": 0.5582,
+      "std": 0.0099,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 0.5513,
+        "43": 0.5457,
+        "44": 0.5644,
+        "45": 0.5594,
+        "46": 0.5703
+      }
+    },
+    "baseline.correlation.pair_precision": {
+      "mean": 0.9992,
+      "std": 0.0005,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 0.9995,
+        "43": 1.0,
+        "44": 0.9986,
+        "45": 0.999,
+        "46": 0.999
+      }
+    },
+    "baseline.correlation.pair_recall": {
+      "mean": 0.3874,
+      "std": 0.0096,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 0.3806,
+        "43": 0.3752,
+        "44": 0.3934,
+        "45": 0.3885,
+        "46": 0.3991
+      }
+    },
+    "baseline.rca.top1_acc": {
+      "mean": 0.392,
+      "std": 0.0432,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 0.45,
+        "43": 0.38,
+        "44": 0.4,
+        "45": 0.4,
+        "46": 0.33
+      }
+    },
+    "baseline.rca.selective_top1_acc": {
+      "mean": 0.392,
+      "std": 0.0432,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 0.45,
+        "43": 0.38,
+        "44": 0.4,
+        "45": 0.4,
+        "46": 0.33
+      }
+    },
+    "baseline.remediation.false_resolution_rate": {
+      "mean": 0.8363,
+      "std": 0.0296,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 0.8193,
+        "43": 0.825,
+        "44": 0.8118,
+        "45": 0.8395,
+        "46": 0.8861
+      }
+    },
+    "baseline.remediation.final_decision_accuracy": {
+      "mean": 0.5217,
+      "std": 0.0474,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 0.5417,
+        "43": 0.5917,
+        "44": 0.475,
+        "45": 0.5167,
+        "46": 0.4833
+      }
+    },
+    "baseline.remediation.escalation_rate": {
+      "mean": 0.2583,
+      "std": 0.0204,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 0.2417,
+        "43": 0.2417,
+        "44": 0.2583,
+        "45": 0.2917,
+        "46": 0.2583
+      }
+    },
+    "baseline.time.mean_ttr_sim_s": {
+      "mean": 160.8,
+      "std": 17.6512,
+      "n_seeds": 5,
+      "per_seed": {
+        "42": 151.0,
+        "43": 169.3,
+        "44": 179.1,
+        "45": 169.6,
+        "46": 135.0
+      }
+    }
+  },
+  "note": "std = variability across generator seeds on SYNTHETIC data; not a real-world confidence interval"
+}

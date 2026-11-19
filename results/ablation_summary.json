@@ -1,0 +1,207 @@
+{
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "results": {
+    "full": {
+      "flags": {
+        "verify": true,
+        "conf_gate": true,
+        "approval_gate": true
+      },
+      "main_seed": {
+        "cases": 120,
+        "final_decision_accuracy": 0.9917,
+        "claimed_resolved": 55,
+        "false_resolution_claims": 0,
+        "false_resolution_rate": 0.0,
+        "actions_on_expected_escalation": 14,
+        "expected_escalation_cases": 46,
+        "wrongful_action_rate": 0.3043,
+        "unsafe_actions": 2,
+        "unsafe_cases": 28,
+        "unsafe_action_rate": 0.0714,
+        "truly_fixed": 55
+      },
+      "mean_std": {
+        "final_decision_accuracy": {
+          "mean": 0.9883,
+          "std": 0.0126
+        },
+        "false_resolution_rate": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "unsafe_action_rate": {
+          "mean": 0.0786,
+          "std": 0.0391
+        },
+        "truly_fixed": {
+          "mean": 55,
+          "std": 1.2247
+        }
+      }
+    },
+    "no_verification": {
+      "flags": {
+        "verify": false,
+        "conf_gate": true,
+        "approval_gate": true
+      },
+      "main_seed": {
+        "cases": 120,
+        "final_decision_accuracy": 0.8833,
+        "claimed_resolved": 68,
+        "false_resolution_claims": 13,
+        "false_resolution_rate": 0.1912,
+        "actions_on_expected_escalation": 14,
+        "expected_escalation_cases": 46,
+        "wrongful_action_rate": 0.3043,
+        "unsafe_actions": 2,
+        "unsafe_cases": 28,
+        "unsafe_action_rate": 0.0714,
+        "truly_fixed": 55
+      },
+      "mean_std": {
+        "final_decision_accuracy": {
+          "mean": 0.88,
+          "std": 0.0095
+        },
+        "false_resolution_rate": {
+          "mean": 0.1912,
+          "std": 0.01
+        },
+        "unsafe_action_rate": {
+          "mean": 0.0786,
+          "std": 0.0391
+        },
+        "truly_fixed": {
+          "mean": 55,
+          "std": 1.2247
+        }
+      }
+    },
+    "no_confidence_gate": {
+      "flags": {
+        "verify": true,
+        "conf_gate": false,
+        "approval_gate": true
+      },
+      "main_seed": {
+        "cases": 120,
+        "final_decision_accuracy": 0.9333,
+        "claimed_resolved": 62,
+        "false_resolution_claims": 0,
+        "false_resolution_rate": 0.0,
+        "actions_on_expected_escalation": 28,
+        "expected_escalation_cases": 46,
+        "wrongful_action_rate": 0.6087,
+        "unsafe_actions": 16,
+        "unsafe_cases": 28,
+        "unsafe_action_rate": 0.5714,
+        "truly_fixed": 62
+      },
+      "mean_std": {
+        "final_decision_accuracy": {
+          "mean": 0.9483,
+          "std": 0.0181
+        },
+        "false_resolution_rate": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "unsafe_action_rate": {
+          "mean": 0.5714,
+          "std": 0.0357
+        },
+        "truly_fixed": {
+          "mean": 59.8,
+          "std": 2.1679
+        }
+      }
+    },
+    "no_approval_gate": {
+      "flags": {
+        "verify": true,
+        "conf_gate": true,
+        "approval_gate": false
+      },
+      "main_seed": {
+        "cases": 120,
+        "final_decision_accuracy": 0.9083,
+        "claimed_resolved": 65,
+        "false_resolution_claims": 0,
+        "false_resolution_rate": 0.0,
+        "actions_on_expected_escalation": 24,
+        "expected_escalation_cases": 46,
+        "wrongful_action_rate": 0.5217,
+        "unsafe_actions": 12,
+        "unsafe_cases": 28,
+        "unsafe_action_rate": 0.4286,
+        "truly_fixed": 65
+      },
+      "mean_std": {
+        "final_decision_accuracy": {
+          "mean": 0.905,
+          "std": 0.0126
+        },
+        "false_resolution_rate": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "unsafe_action_rate": {
+          "mean": 0.4357,
+          "std": 0.0391
+        },
+        "truly_fixed": {
+          "mean": 65,
+          "std": 1.2247
+        }
+      }
+    },
+    "all_off": {
+      "flags": {
+        "verify": false,
+        "conf_gate": false,
+        "approval_gate": false
+      },
+      "main_seed": {
+        "cases": 120,
+        "final_decision_accuracy": 0.6833,
+        "claimed_resolved": 92,
+        "false_resolution_claims": 20,
+        "false_resolution_rate": 0.2174,
+        "actions_on_expected_escalation": 38,
+        "expected_escalation_cases": 46,
+        "wrongful_action_rate": 0.8261,
+        "unsafe_actions": 26,
+        "unsafe_cases": 28,
+        "unsafe_action_rate": 0.9286,
+        "truly_fixed": 72
+      },
+      "mean_std": {
+        "final_decision_accuracy": {
+          "mean": 0.6817,
+          "std": 0.0109
+        },
+        "false_resolution_rate": {
+          "mean": 0.2395,
+          "std": 0.0281
+        },
+        "unsafe_action_rate": {
+          "mean": 0.9286,
+          "std": 0.0357
+        },
+        "truly_fixed": {
+          "mean": 69.8,
+          "std": 2.1679
+        }
+      }
+    }
+  },
+  "note": "synthetic benchmark; one component removed at a time"
+}

@@ -1,0 +1,162 @@
+{
+  "datasets": {
+    "smd": {
+      "name": "SMD, server machines (OmniAnomaly)",
+      "series": 28,
+      "samples_scored": 602170,
+      "results": {
+        "ours": {
+          "windows": 293,
+          "windows_hit": 69,
+          "alarms": 336,
+          "alarms_in_window": 210,
+          "window_recall": 0.235,
+          "alarm_precision": 0.625,
+          "f1": 0.342,
+          "alarms_per_1000": 0.56,
+          "mean_delay_samples": 52.2
+        },
+        "ours_2sided": {
+          "windows": 293,
+          "windows_hit": 71,
+          "alarms": 414,
+          "alarms_in_window": 233,
+          "window_recall": 0.242,
+          "alarm_precision": 0.563,
+          "f1": 0.339,
+          "alarms_per_1000": 0.69,
+          "mean_delay_samples": 47.7
+        },
+        "static": {
+          "windows": 293,
+          "windows_hit": 288,
+          "alarms": 91562,
+          "alarms_in_window": 8885,
+          "window_recall": 0.983,
+          "alarm_precision": 0.097,
+          "f1": 0.177,
+          "alarms_per_1000": 152.05,
+          "mean_delay_samples": 5.7
+        },
+        "static_2sided": {
+          "windows": 293,
+          "windows_hit": 288,
+          "alarms": 99916,
+          "alarms_in_window": 9097,
+          "window_recall": 0.983,
+          "alarm_precision": 0.091,
+          "f1": 0.167,
+          "alarms_per_1000": 165.93,
+          "mean_delay_samples": 5.7
+        }
+      }
+    },
+    "kpi": {
+      "name": "KPI, web service KPIs (AIOps 2018)",
+      "series": 26,
+      "samples_scored": 2104879,
+      "results": {
+        "ours": {
+          "windows": 792,
+          "windows_hit": 114,
+          "alarms": 425,
+          "alarms_in_window": 146,
+          "window_recall": 0.144,
+          "alarm_precision": 0.344,
+          "f1": 0.203,
+          "alarms_per_1000": 0.2,
+          "mean_delay_samples": 97.1
+        },
+        "ours_2sided": {
+          "windows": 792,
+          "windows_hit": 126,
+          "alarms": 541,
+          "alarms_in_window": 164,
+          "window_recall": 0.159,
+          "alarm_precision": 0.303,
+          "f1": 0.209,
+          "alarms_per_1000": 0.26,
+          "mean_delay_samples": 63.2
+        },
+        "static": {
+          "windows": 792,
+          "windows_hit": 200,
+          "alarms": 3916,
+          "alarms_in_window": 1719,
+          "window_recall": 0.253,
+          "alarm_precision": 0.439,
+          "f1": 0.321,
+          "alarms_per_1000": 1.86,
+          "mean_delay_samples": 28.9
+        },
+        "static_2sided": {
+          "windows": 792,
+          "windows_hit": 217,
+          "alarms": 4008,
+          "alarms_in_window": 1741,
+          "window_recall": 0.274,
+          "alarm_precision": 0.434,
+          "f1": 0.336,
+          "alarms_per_1000": 1.9,
+          "mean_delay_samples": 27.4
+        }
+      }
+    },
+    "skab": {
+      "name": "SKAB, industrial sensor testbed",
+      "series": 34,
+      "samples_scored": 30601,
+      "results": {
+        "ours": {
+          "windows": 34,
+          "windows_hit": 2,
+          "alarms": 2,
+          "alarms_in_window": 2,
+          "window_recall": 0.059,
+          "alarm_precision": 1.0,
+          "f1": 0.111,
+          "alarms_per_1000": 0.07,
+          "mean_delay_samples": 362
+        },
+        "ours_2sided": {
+          "windows": 34,
+          "windows_hit": 4,
+          "alarms": 11,
+          "alarms_in_window": 10,
+          "window_recall": 0.118,
+          "alarm_precision": 0.909,
+          "f1": 0.208,
+          "alarms_per_1000": 0.36,
+          "mean_delay_samples": 128.2
+        },
+        "static": {
+          "windows": 34,
+          "windows_hit": 31,
+          "alarms": 1642,
+          "alarms_in_window": 615,
+          "window_recall": 0.912,
+          "alarm_precision": 0.375,
+          "f1": 0.531,
+          "alarms_per_1000": 53.66,
+          "mean_delay_samples": 68.9
+        },
+        "static_2sided": {
+          "windows": 34,
+          "windows_hit": 34,
+          "alarms": 4178,
+          "alarms_in_window": 2170,
+          "window_recall": 1.0,
+          "alarm_precision": 0.519,
+          "f1": 0.684,
+          "alarms_per_1000": 136.53,
+          "mean_delay_samples": 13.1
+        }
+      }
+    }
+  },
+  "window": 200,
+  "z_thresh": 6.0,
+  "sustain": 4,
+  "alarm_tolerance_samples": 8,
+  "note": "detection only; thresholds from config.py, nothing tuned; multi-metric series alarm if any metric alarms"
+}

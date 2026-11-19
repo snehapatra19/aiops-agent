@@ -1,0 +1,30 @@
+{
+ "incident_id": null,
+ "case_id": "S42-008",
+ "synthetic": true,
+ "scenario_type": "normal",
+ "final_status": "no_incident",
+ "escalation_reason": null,
+ "engine": "langgraph",
+ "symptoms": [],
+ "correlated_alerts": [],
+ "root_cause": null,
+ "action": null,
+ "policy": null,
+ "execution": null,
+ "verification": null,
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "0 sustained anomalies"
+  },
+  {
+   "node": "report",
+   "msg": "no_incident"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "none",
+  "expected_final": "no_incident"
+ }
+}

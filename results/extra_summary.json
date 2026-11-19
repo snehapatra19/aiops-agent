@@ -1,0 +1,240 @@
+{
+  "datasets": {
+    "nab_more": {
+      "name": "NAB, four more real categories",
+      "series": 30,
+      "results": {
+        "ours": {
+          "windows": 71,
+          "windows_hit": 22,
+          "alarms": 578,
+          "window_recall": 0.31,
+          "alarm_precision": 0.123,
+          "f1": 0.176,
+          "alarms_per_1000": 2.68
+        },
+        "ours_2sided": {
+          "windows": 71,
+          "windows_hit": 27,
+          "alarms": 592,
+          "window_recall": 0.38,
+          "alarm_precision": 0.132,
+          "f1": 0.196,
+          "alarms_per_1000": 2.75
+        },
+        "static": {
+          "windows": 71,
+          "windows_hit": 52,
+          "alarms": 2021,
+          "window_recall": 0.732,
+          "alarm_precision": 0.192,
+          "f1": 0.304,
+          "alarms_per_1000": 9.38
+        },
+        "static_2sided": {
+          "windows": 71,
+          "windows_hit": 62,
+          "alarms": 2075,
+          "window_recall": 0.873,
+          "alarm_precision": 0.199,
+          "f1": 0.324,
+          "alarms_per_1000": 9.63
+        }
+      }
+    }
+  },
+  "triage": {
+    "name": "UCI incident event log",
+    "events": 119998,
+    "incidents": 20769,
+    "train": 14538,
+    "test": 6231,
+    "results": {
+      "handoff": {
+        "model": {
+          "auc": 0.697,
+          "precision_at_top": 0.32,
+          "base_rate": 0.163
+        },
+        "priority_only": {
+          "auc": 0.52,
+          "precision_at_top": 0.152,
+          "base_rate": 0.163
+        }
+      },
+      "sla_breach": {
+        "model": {
+          "auc": 0.777,
+          "precision_at_top": 0.532,
+          "base_rate": 0.231
+        },
+        "priority_only": {
+          "auc": 0.564,
+          "precision_at_top": 0.311,
+          "base_rate": 0.231
+        }
+      }
+    },
+    "resolution": {
+      "1 - Critical": {
+        "incidents": 152,
+        "median_hours": 52.0
+      },
+      "2 - High": {
+        "incidents": 259,
+        "median_hours": 54.7
+      },
+      "3 - Moderate": {
+        "incidents": 18404,
+        "median_hours": 24.5
+      },
+      "4 - Low": {
+        "incidents": 536,
+        "median_hours": 8.4
+      }
+    }
+  },
+  "logs": {
+    "name": "Loghub, 16 systems",
+    "systems": [
+      {
+        "system": "Android",
+        "lines": 2000,
+        "templates": 166,
+        "error_like_pct": 0.3
+      },
+      {
+        "system": "Apache",
+        "lines": 2000,
+        "templates": 6,
+        "error_like_pct": 26.9
+      },
+      {
+        "system": "BGL",
+        "lines": 2000,
+        "templates": 120,
+        "error_like_pct": 31.4
+      },
+      {
+        "system": "HDFS",
+        "lines": 2000,
+        "templates": 14,
+        "error_like_pct": 4.0
+      },
+      {
+        "system": "HPC",
+        "lines": 2000,
+        "templates": 46,
+        "error_like_pct": 24.9
+      },
+      {
+        "system": "Hadoop",
+        "lines": 2000,
+        "templates": 114,
+        "error_like_pct": 25.2
+      },
+      {
+        "system": "HealthApp",
+        "lines": 2000,
+        "templates": 75,
+        "error_like_pct": 0.5
+      },
+      {
+        "system": "Linux",
+        "lines": 2000,
+        "templates": 118,
+        "error_like_pct": 27.0
+      },
+      {
+        "system": "Mac",
+        "lines": 2000,
+        "templates": 341,
+        "error_like_pct": 18.0
+      },
+      {
+        "system": "OpenSSH",
+        "lines": 2000,
+        "templates": 27,
+        "error_like_pct": 58.2
+      },
+      {
+        "system": "OpenStack",
+        "lines": 2000,
+        "templates": 43,
+        "error_like_pct": 1.1
+      },
+      {
+        "system": "Proxifier",
+        "lines": 2000,
+        "templates": 8,
+        "error_like_pct": 4.8
+      },
+      {
+        "system": "Spark",
+        "lines": 2000,
+        "templates": 36,
+        "error_like_pct": 0.0
+      },
+      {
+        "system": "Thunderbird",
+        "lines": 2000,
+        "templates": 149,
+        "error_like_pct": 3.2
+      },
+      {
+        "system": "Windows",
+        "lines": 2000,
+        "templates": 50,
+        "error_like_pct": 12.5
+      },
+      {
+        "system": "Zookeeper",
+        "lines": 2000,
+        "templates": 50,
+        "error_like_pct": 21.9
+      }
+    ],
+    "bgl": {
+      "lines_tested": 1000,
+      "alert_lines": 47,
+      "results": {
+        "rare_template": {
+          "auc": 0.655
+        },
+        "error_keywords": {
+          "auc": 0.725
+        },
+        "severity_level": {
+          "auc": 0.954
+        },
+        "keywords_plus_rare": {
+          "auc": 0.785
+        }
+      }
+    }
+  },
+  "hardware": {
+    "name": "Alibaba SSD location data",
+    "disks": 965495,
+    "racks": 28585,
+    "nodes": 238740,
+    "apps": {
+      "WSM": 380170,
+      "none": 248757,
+      "RM": 183981,
+      "WPS": 44676,
+      "SS": 32936,
+      "DB": 26781
+    },
+    "models": {
+      "A1": 282643,
+      "C1": 200247,
+      "A2": 121529,
+      "B1": 100328,
+      "B2": 49258,
+      "B3": 44473
+    },
+    "mean_disks_per_node": 4.0,
+    "max_disks_per_node": 55
+  }
+}

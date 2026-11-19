@@ -1,0 +1,117 @@
+{
+ "incident_id": "INC-S42-079",
+ "case_id": "S42-079",
+ "synthetic": true,
+ "scenario_type": "bad_deployment",
+ "final_status": "escalated",
+ "escalation_reason": "high_risk_requires_approval",
+ "engine": "langgraph",
+ "symptoms": [
+  {
+   "service": "auth-service",
+   "metric": "error_rate",
+   "onset_idx": 20,
+   "detect_idx": 23,
+   "peak_z": 106.78,
+   "peak_value": 12.74
+  },
+  {
+   "service": "auth-service",
+   "metric": "latency_ms",
+   "onset_idx": 20,
+   "detect_idx": 23,
+   "peak_z": 20.8,
+   "peak_value": 387.13
+  }
+ ],
+ "correlated_alerts": [
+  "S42-079-A01",
+  "S42-079-A02"
+ ],
+ "root_cause": {
+  "top": "bad_deployment",
+  "confidence": 0.8801,
+  "margin": 0.8363,
+  "root_service": "auth-service",
+  "ranked": [
+   [
+    "bad_deployment",
+    0.8801
+   ],
+   [
+    "cpu_saturation",
+    0.0438
+   ],
+   [
+    "db_pool_exhaustion",
+    0.0438
+   ],
+   [
+    "dependency_failure",
+    0.0161
+   ],
+   [
+    "memory_leak",
+    0.0161
+   ]
+  ],
+  "evidence": [
+   "+2.0: deployment on auth-service v2.4.8 shortly before onset",
+   "+1.5: log: new exception types",
+   "+1.0: error-rate anomaly without resource anomaly"
+  ],
+  "missing": [
+   "no resource-metric anomaly (cpu/mem/pool)"
+  ],
+  "next_step": "Compare error rate before/after the latest deployment; review release diff.",
+  "uncertain": false
+ },
+ "action": {
+  "action": "rollback_deployment",
+  "target": "auth-service",
+  "params": {},
+  "environment": "sandbox"
+ },
+ "policy": {
+  "allowed": true,
+  "requires_approval": true,
+  "risk": "high",
+  "reason": "approval required"
+ },
+ "execution": null,
+ "verification": null,
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "2 sustained anomalies"
+  },
+  {
+   "node": "correlate",
+   "msg": "2 alerts -> 1 groups; incident has 2 alerts"
+  },
+  {
+   "node": "evidence",
+   "msg": "10 logs, 6 traces"
+  },
+  {
+   "node": "rca",
+   "msg": "top=bad_deployment conf=0.8801 margin=0.8363 uncertain=False"
+  },
+  {
+   "node": "plan",
+   "msg": "rollback_deployment on auth-service: approval required (risk=high)"
+  },
+  {
+   "node": "escalate",
+   "msg": "high_risk_requires_approval"
+  },
+  {
+   "node": "report",
+   "msg": "escalated"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "bad_deployment",
+  "expected_final": "escalated"
+ }
+}

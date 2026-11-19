@@ -1,0 +1,175 @@
+{
+ "incident_id": "INC-S42-031",
+ "case_id": "S42-031",
+ "synthetic": true,
+ "scenario_type": "cpu_saturation",
+ "final_status": "resolved",
+ "escalation_reason": null,
+ "engine": "langgraph",
+ "symptoms": [
+  {
+   "service": "payment-service",
+   "metric": "latency_ms",
+   "onset_idx": 20,
+   "detect_idx": 23,
+   "peak_z": 78.62,
+   "peak_value": 593.67
+  },
+  {
+   "service": "api-gateway",
+   "metric": "latency_ms",
+   "onset_idx": 20,
+   "detect_idx": 23,
+   "peak_z": 23.6,
+   "peak_value": 436.27
+  },
+  {
+   "service": "payment-service",
+   "metric": "cpu",
+   "onset_idx": 20,
+   "detect_idx": 23,
+   "peak_z": 12.01,
+   "peak_value": 95.15
+  }
+ ],
+ "correlated_alerts": [
+  "S42-031-A01",
+  "S42-031-A03",
+  "S42-031-A09",
+  "S42-031-A02",
+  "S42-031-A04",
+  "S42-031-A10",
+  "S42-031-A05",
+  "S42-031-A06",
+  "S42-031-A07",
+  "S42-031-A08"
+ ],
+ "root_cause": {
+  "top": "cpu_saturation",
+  "confidence": 0.927,
+  "margin": 0.8809,
+  "root_service": "payment-service",
+  "ranked": [
+   [
+    "cpu_saturation",
+    0.927
+   ],
+   [
+    "db_pool_exhaustion",
+    0.0462
+   ],
+   [
+    "dependency_failure",
+    0.0103
+   ],
+   [
+    "memory_leak",
+    0.0103
+   ],
+   [
+    "bad_deployment",
+    0.0062
+   ]
+  ],
+  "evidence": [
+   "+2.0: CPU anomaly on payment-service",
+   "+1.5: log: CPU throttling",
+   "+1.0: trace: dominant span is compute",
+   "+0.5: latency symptom present"
+  ],
+  "missing": [],
+  "next_step": "Inspect per-pod CPU and recent traffic; confirm autoscaling headroom.",
+  "uncertain": false
+ },
+ "action": {
+  "action": "scale_out_replicas",
+  "target": "payment-service",
+  "params": {
+   "replicas": 2
+  },
+  "environment": "sandbox"
+ },
+ "policy": {
+  "allowed": true,
+  "requires_approval": false,
+  "risk": "low",
+  "reason": "allowed"
+ },
+ "execution": {
+  "exec_ok": true,
+  "detail": "[SIMULATED] scale_out_replicas on payment-service",
+  "duration_s": 60,
+  "post_mode": "fixed"
+ },
+ "verification": {
+  "overall": "resolved",
+  "series": [
+   {
+    "service": "payment-service",
+    "metric": "latency_ms",
+    "state": "resolved",
+    "ratio": 0.003,
+    "baseline": 120.4,
+    "peak": 570.85,
+    "post": 121.63
+   },
+   {
+    "service": "api-gateway",
+    "metric": "latency_ms",
+    "state": "resolved",
+    "ratio": 0.005,
+    "baseline": 119.12,
+    "peak": 424.85,
+    "post": 120.8
+   },
+   {
+    "service": "payment-service",
+    "metric": "cpu",
+    "state": "resolved",
+    "ratio": -0.008,
+    "baseline": 36.7,
+    "peak": 92.15,
+    "post": 36.28
+   }
+  ],
+  "verify_window_s": 75
+ },
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "3 sustained anomalies"
+  },
+  {
+   "node": "correlate",
+   "msg": "10 alerts -> 1 groups; incident has 10 alerts"
+  },
+  {
+   "node": "evidence",
+   "msg": "9 logs, 6 traces"
+  },
+  {
+   "node": "rca",
+   "msg": "top=cpu_saturation conf=0.927 margin=0.8809 uncertain=False"
+  },
+  {
+   "node": "plan",
+   "msg": "scale_out_replicas on payment-service: allowed (risk=low)"
+  },
+  {
+   "node": "execute",
+   "msg": "[SIMULATED] scale_out_replicas on payment-service"
+  },
+  {
+   "node": "verify",
+   "msg": "resolved"
+  },
+  {
+   "node": "report",
+   "msg": "resolved"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "cpu_saturation",
+  "expected_final": "resolved"
+ }
+}

@@ -1,0 +1,118 @@
+{
+ "incident_id": "INC-S42-075",
+ "case_id": "S42-075",
+ "synthetic": true,
+ "scenario_type": "bad_deployment",
+ "final_status": "escalated",
+ "escalation_reason": "high_risk_requires_approval",
+ "engine": "langgraph",
+ "symptoms": [
+  {
+   "service": "order-service",
+   "metric": "error_rate",
+   "onset_idx": 20,
+   "detect_idx": 23,
+   "peak_z": 85.02,
+   "peak_value": 12.87
+  },
+  {
+   "service": "order-service",
+   "metric": "latency_ms",
+   "onset_idx": 20,
+   "detect_idx": 23,
+   "peak_z": 23.27,
+   "peak_value": 384.09
+  }
+ ],
+ "correlated_alerts": [
+  "S42-075-A01",
+  "S42-075-A02",
+  "S42-075-A03"
+ ],
+ "root_cause": {
+  "top": "bad_deployment",
+  "confidence": 0.6806,
+  "margin": 0.5287,
+  "root_service": "order-service",
+  "ranked": [
+   [
+    "bad_deployment",
+    0.6806
+   ],
+   [
+    "cpu_saturation",
+    0.1519
+   ],
+   [
+    "db_pool_exhaustion",
+    0.0559
+   ],
+   [
+    "dependency_failure",
+    0.0559
+   ],
+   [
+    "memory_leak",
+    0.0559
+   ]
+  ],
+  "evidence": [
+   "+2.0: deployment on order-service v3.0.5 shortly before onset",
+   "+1.0: error-rate anomaly without resource anomaly"
+  ],
+  "missing": [
+   "no error/warn logs retrieved",
+   "no resource-metric anomaly (cpu/mem/pool)"
+  ],
+  "next_step": "Compare error rate before/after the latest deployment; review release diff.",
+  "uncertain": false
+ },
+ "action": {
+  "action": "rollback_deployment",
+  "target": "order-service",
+  "params": {},
+  "environment": "sandbox"
+ },
+ "policy": {
+  "allowed": true,
+  "requires_approval": true,
+  "risk": "high",
+  "reason": "approval required"
+ },
+ "execution": null,
+ "verification": null,
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "2 sustained anomalies"
+  },
+  {
+   "node": "correlate",
+   "msg": "3 alerts -> 1 groups; incident has 3 alerts"
+  },
+  {
+   "node": "evidence",
+   "msg": "0 logs, 5 traces"
+  },
+  {
+   "node": "rca",
+   "msg": "top=bad_deployment conf=0.6806 margin=0.5287 uncertain=False"
+  },
+  {
+   "node": "plan",
+   "msg": "rollback_deployment on order-service: approval required (risk=high)"
+  },
+  {
+   "node": "escalate",
+   "msg": "high_risk_requires_approval"
+  },
+  {
+   "node": "report",
+   "msg": "escalated"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "bad_deployment",
+  "expected_final": "escalated"
+ }
+}

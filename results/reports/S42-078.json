@@ -1,0 +1,117 @@
+{
+ "incident_id": "INC-S42-078",
+ "case_id": "S42-078",
+ "synthetic": true,
+ "scenario_type": "bad_deployment",
+ "final_status": "escalated",
+ "escalation_reason": "high_risk_requires_approval",
+ "engine": "langgraph",
+ "symptoms": [
+  {
+   "service": "api-gateway",
+   "metric": "error_rate",
+   "onset_idx": 24,
+   "detect_idx": 27,
+   "peak_z": 78.65,
+   "peak_value": 12.9
+  },
+  {
+   "service": "api-gateway",
+   "metric": "latency_ms",
+   "onset_idx": 24,
+   "detect_idx": 27,
+   "peak_z": 18.2,
+   "peak_value": 384.98
+  }
+ ],
+ "correlated_alerts": [
+  "S42-078-A02",
+  "S42-078-A03"
+ ],
+ "root_cause": {
+  "top": "bad_deployment",
+  "confidence": 0.9111,
+  "margin": 0.8658,
+  "root_service": "api-gateway",
+  "ranked": [
+   [
+    "bad_deployment",
+    0.9111
+   ],
+   [
+    "cpu_saturation",
+    0.0454
+   ],
+   [
+    "dependency_failure",
+    0.0167
+   ],
+   [
+    "memory_leak",
+    0.0167
+   ],
+   [
+    "db_pool_exhaustion",
+    0.0101
+   ]
+  ],
+  "evidence": [
+   "+2.0: deployment on api-gateway v3.4.1 shortly before onset",
+   "+1.5: log: new exception types",
+   "+1.0: error-rate anomaly without resource anomaly"
+  ],
+  "missing": [
+   "no resource-metric anomaly (cpu/mem/pool)"
+  ],
+  "next_step": "Compare error rate before/after the latest deployment; review release diff.",
+  "uncertain": false
+ },
+ "action": {
+  "action": "rollback_deployment",
+  "target": "api-gateway",
+  "params": {},
+  "environment": "sandbox"
+ },
+ "policy": {
+  "allowed": true,
+  "requires_approval": true,
+  "risk": "high",
+  "reason": "approval required"
+ },
+ "execution": null,
+ "verification": null,
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "2 sustained anomalies"
+  },
+  {
+   "node": "correlate",
+   "msg": "3 alerts -> 2 groups; incident has 2 alerts"
+  },
+  {
+   "node": "evidence",
+   "msg": "9 logs, 4 traces"
+  },
+  {
+   "node": "rca",
+   "msg": "top=bad_deployment conf=0.9111 margin=0.8658 uncertain=False"
+  },
+  {
+   "node": "plan",
+   "msg": "rollback_deployment on api-gateway: approval required (risk=high)"
+  },
+  {
+   "node": "escalate",
+   "msg": "high_risk_requires_approval"
+  },
+  {
+   "node": "report",
+   "msg": "escalated"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "bad_deployment",
+  "expected_final": "escalated"
+ }
+}

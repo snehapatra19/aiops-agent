@@ -1,0 +1,173 @@
+{
+ "incident_id": "INC-S42-027",
+ "case_id": "S42-027",
+ "synthetic": true,
+ "scenario_type": "cpu_saturation",
+ "final_status": "resolved",
+ "escalation_reason": null,
+ "engine": "langgraph",
+ "symptoms": [
+  {
+   "service": "api-gateway",
+   "metric": "latency_ms",
+   "onset_idx": 20,
+   "detect_idx": 23,
+   "peak_z": 33.12,
+   "peak_value": 436.31
+  },
+  {
+   "service": "order-service",
+   "metric": "latency_ms",
+   "onset_idx": 20,
+   "detect_idx": 23,
+   "peak_z": 32.75,
+   "peak_value": 590.58
+  },
+  {
+   "service": "order-service",
+   "metric": "cpu",
+   "onset_idx": 20,
+   "detect_idx": 23,
+   "peak_z": 24.77,
+   "peak_value": 96.72
+  }
+ ],
+ "correlated_alerts": [
+  "S42-027-A01",
+  "S42-027-A03",
+  "S42-027-A07",
+  "S42-027-A02",
+  "S42-027-A04",
+  "S42-027-A08",
+  "S42-027-A05"
+ ],
+ "root_cause": {
+  "top": "cpu_saturation",
+  "confidence": 0.9018,
+  "margin": 0.8746,
+  "root_service": "order-service",
+  "ranked": [
+   [
+    "cpu_saturation",
+    0.9018
+   ],
+   [
+    "db_pool_exhaustion",
+    0.0272
+   ],
+   [
+    "dependency_failure",
+    0.0272
+   ],
+   [
+    "memory_leak",
+    0.0272
+   ],
+   [
+    "bad_deployment",
+    0.0165
+   ]
+  ],
+  "evidence": [
+   "+2.0: CPU anomaly on order-service",
+   "+1.5: log: CPU throttling",
+   "+0.5: latency symptom present"
+  ],
+  "missing": [
+   "no trace summaries retrieved"
+  ],
+  "next_step": "Inspect per-pod CPU and recent traffic; confirm autoscaling headroom.",
+  "uncertain": false
+ },
+ "action": {
+  "action": "scale_out_replicas",
+  "target": "order-service",
+  "params": {
+   "replicas": 2
+  },
+  "environment": "sandbox"
+ },
+ "policy": {
+  "allowed": true,
+  "requires_approval": false,
+  "risk": "low",
+  "reason": "allowed"
+ },
+ "execution": {
+  "exec_ok": true,
+  "detail": "[SIMULATED] scale_out_replicas on order-service",
+  "duration_s": 60,
+  "post_mode": "fixed"
+ },
+ "verification": {
+  "overall": "resolved",
+  "series": [
+   {
+    "service": "api-gateway",
+    "metric": "latency_ms",
+    "state": "resolved",
+    "ratio": 0.006,
+    "baseline": 114.61,
+    "peak": 411.37,
+    "post": 116.25
+   },
+   {
+    "service": "order-service",
+    "metric": "latency_ms",
+    "state": "resolved",
+    "ratio": -0.019,
+    "baseline": 121.2,
+    "peak": 575.61,
+    "post": 112.6
+   },
+   {
+    "service": "order-service",
+    "metric": "cpu",
+    "state": "resolved",
+    "ratio": -0.04,
+    "baseline": 35.3,
+    "peak": 90.75,
+    "post": 33.07
+   }
+  ],
+  "verify_window_s": 75
+ },
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "3 sustained anomalies"
+  },
+  {
+   "node": "correlate",
+   "msg": "8 alerts -> 2 groups; incident has 7 alerts"
+  },
+  {
+   "node": "evidence",
+   "msg": "8 logs, 0 traces"
+  },
+  {
+   "node": "rca",
+   "msg": "top=cpu_saturation conf=0.9018 margin=0.8746 uncertain=False"
+  },
+  {
+   "node": "plan",
+   "msg": "scale_out_replicas on order-service: allowed (risk=low)"
+  },
+  {
+   "node": "execute",
+   "msg": "[SIMULATED] scale_out_replicas on order-service"
+  },
+  {
+   "node": "verify",
+   "msg": "resolved"
+  },
+  {
+   "node": "report",
+   "msg": "resolved"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "cpu_saturation",
+  "expected_final": "resolved"
+ }
+}

@@ -1,0 +1,166 @@
+{
+ "incident_id": "INC-S42-059",
+ "case_id": "S42-059",
+ "synthetic": true,
+ "scenario_type": "memory_leak",
+ "final_status": "resolved",
+ "escalation_reason": null,
+ "engine": "langgraph",
+ "symptoms": [
+  {
+   "service": "order-service",
+   "metric": "latency_ms",
+   "onset_idx": 28,
+   "detect_idx": 31,
+   "peak_z": 30.16,
+   "peak_value": 430.8
+  },
+  {
+   "service": "order-service",
+   "metric": "mem",
+   "onset_idx": 29,
+   "detect_idx": 32,
+   "peak_z": 16.6,
+   "peak_value": 100.0
+  },
+  {
+   "service": "order-service",
+   "metric": "error_rate",
+   "onset_idx": 32,
+   "detect_idx": 35,
+   "peak_z": 23.42,
+   "peak_value": 3.64
+  }
+ ],
+ "correlated_alerts": [
+  "S42-059-A01",
+  "S42-059-A02",
+  "S42-059-A03"
+ ],
+ "root_cause": {
+  "top": "memory_leak",
+  "confidence": 0.9615,
+  "margin": 0.9508,
+  "root_service": "order-service",
+  "ranked": [
+   [
+    "memory_leak",
+    0.9615
+   ],
+   [
+    "cpu_saturation",
+    0.0107
+   ],
+   [
+    "db_pool_exhaustion",
+    0.0107
+   ],
+   [
+    "dependency_failure",
+    0.0107
+   ],
+   [
+    "bad_deployment",
+    0.0065
+   ]
+  ],
+  "evidence": [
+   "+2.0: memory anomaly on order-service",
+   "+1.5: log: GC/OOM",
+   "+1.0: trace: dominant span is GC",
+   "+0.5: latency symptom present"
+  ],
+  "missing": [],
+  "next_step": "Capture heap profile and check memory growth trend over the last hours.",
+  "uncertain": false
+ },
+ "action": {
+  "action": "restart_service",
+  "target": "order-service",
+  "params": {},
+  "environment": "sandbox"
+ },
+ "policy": {
+  "allowed": true,
+  "requires_approval": false,
+  "risk": "medium",
+  "reason": "allowed"
+ },
+ "execution": {
+  "exec_ok": true,
+  "detail": "[SIMULATED] restart_service on order-service",
+  "duration_s": 90,
+  "post_mode": "fixed"
+ },
+ "verification": {
+  "overall": "resolved",
+  "series": [
+   {
+    "service": "order-service",
+    "metric": "latency_ms",
+    "state": "resolved",
+    "ratio": 0.013,
+    "baseline": 120.4,
+    "peak": 427.37,
+    "post": 124.52
+   },
+   {
+    "service": "order-service",
+    "metric": "mem",
+    "state": "resolved",
+    "ratio": -0.041,
+    "baseline": 50.95,
+    "peak": 95.79,
+    "post": 49.09
+   },
+   {
+    "service": "order-service",
+    "metric": "error_rate",
+    "state": "resolved",
+    "ratio": -0.011,
+    "baseline": 0.59,
+    "peak": 3.51,
+    "post": 0.56
+   }
+  ],
+  "verify_window_s": 75
+ },
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "3 sustained anomalies"
+  },
+  {
+   "node": "correlate",
+   "msg": "3 alerts -> 1 groups; incident has 3 alerts"
+  },
+  {
+   "node": "evidence",
+   "msg": "7 logs, 6 traces"
+  },
+  {
+   "node": "rca",
+   "msg": "top=memory_leak conf=0.9615 margin=0.9508 uncertain=False"
+  },
+  {
+   "node": "plan",
+   "msg": "restart_service on order-service: allowed (risk=medium)"
+  },
+  {
+   "node": "execute",
+   "msg": "[SIMULATED] restart_service on order-service"
+  },
+  {
+   "node": "verify",
+   "msg": "resolved"
+  },
+  {
+   "node": "report",
+   "msg": "resolved"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "memory_leak",
+  "expected_final": "resolved"
+ }
+}

@@ -1,0 +1,8 @@
+langgraph>=0.2
+matplotlib>=3.7
+pytest>=7.0
+# optional
+anthropic>=0.30   # only for optional live-LLM mode
+fastapi>=0.110
+uvicorn>=0.29
+psutil>=5.9

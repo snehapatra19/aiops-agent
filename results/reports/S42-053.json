@@ -1,0 +1,167 @@
+{
+ "incident_id": "INC-S42-053",
+ "case_id": "S42-053",
+ "synthetic": true,
+ "scenario_type": "memory_leak",
+ "final_status": "resolved",
+ "escalation_reason": null,
+ "engine": "langgraph",
+ "symptoms": [
+  {
+   "service": "api-gateway",
+   "metric": "latency_ms",
+   "onset_idx": 28,
+   "detect_idx": 31,
+   "peak_z": 26.33,
+   "peak_value": 431.33
+  },
+  {
+   "service": "api-gateway",
+   "metric": "mem",
+   "onset_idx": 28,
+   "detect_idx": 31,
+   "peak_z": 19.57,
+   "peak_value": 100.0
+  },
+  {
+   "service": "api-gateway",
+   "metric": "error_rate",
+   "onset_idx": 31,
+   "detect_idx": 34,
+   "peak_z": 30.92,
+   "peak_value": 3.59
+  }
+ ],
+ "correlated_alerts": [
+  "S42-053-A01",
+  "S42-053-A02",
+  "S42-053-A03"
+ ],
+ "root_cause": {
+  "top": "memory_leak",
+  "confidence": 0.8621,
+  "margin": 0.8192,
+  "root_service": "api-gateway",
+  "ranked": [
+   [
+    "memory_leak",
+    0.8621
+   ],
+   [
+    "cpu_saturation",
+    0.0429
+   ],
+   [
+    "dependency_failure",
+    0.0429
+   ],
+   [
+    "bad_deployment",
+    0.026
+   ],
+   [
+    "db_pool_exhaustion",
+    0.026
+   ]
+  ],
+  "evidence": [
+   "+2.0: memory anomaly on api-gateway",
+   "+1.0: trace: dominant span is GC",
+   "+0.5: latency symptom present"
+  ],
+  "missing": [
+   "no error/warn logs retrieved"
+  ],
+  "next_step": "Capture heap profile and check memory growth trend over the last hours.",
+  "uncertain": false
+ },
+ "action": {
+  "action": "restart_service",
+  "target": "api-gateway",
+  "params": {},
+  "environment": "sandbox"
+ },
+ "policy": {
+  "allowed": true,
+  "requires_approval": false,
+  "risk": "medium",
+  "reason": "allowed"
+ },
+ "execution": {
+  "exec_ok": true,
+  "detail": "[SIMULATED] restart_service on api-gateway",
+  "duration_s": 90,
+  "post_mode": "fixed"
+ },
+ "verification": {
+  "overall": "resolved",
+  "series": [
+   {
+    "service": "api-gateway",
+    "metric": "latency_ms",
+    "state": "resolved",
+    "ratio": 0.009,
+    "baseline": 120.31,
+    "peak": 418.13,
+    "post": 122.9
+   },
+   {
+    "service": "api-gateway",
+    "metric": "mem",
+    "state": "resolved",
+    "ratio": -0.009,
+    "baseline": 50.55,
+    "peak": 100.0,
+    "post": 50.11
+   },
+   {
+    "service": "api-gateway",
+    "metric": "error_rate",
+    "state": "resolved",
+    "ratio": 0.036,
+    "baseline": 0.5,
+    "peak": 3.32,
+    "post": 0.6
+   }
+  ],
+  "verify_window_s": 75
+ },
+ "timeline": [
+  {
+   "node": "detect",
+   "msg": "3 sustained anomalies"
+  },
+  {
+   "node": "correlate",
+   "msg": "5 alerts -> 2 groups; incident has 3 alerts"
+  },
+  {
+   "node": "evidence",
+   "msg": "0 logs, 3 traces"
+  },
+  {
+   "node": "rca",
+   "msg": "top=memory_leak conf=0.8621 margin=0.8192 uncertain=False"
+  },
+  {
+   "node": "plan",
+   "msg": "restart_service on api-gateway: allowed (risk=medium)"
+  },
+  {
+   "node": "execute",
+   "msg": "[SIMULATED] restart_service on api-gateway"
+  },
+  {
+   "node": "verify",
+   "msg": "resolved"
+  },
+  {
+   "node": "report",
+   "msg": "resolved"
+  }
+ ],
+ "ground_truth": {
+  "root_cause": "memory_leak",
+  "expected_final": "resolved"
+ }
+}
