@@ -4,55 +4,57 @@ Project: *An AI-Agent-Based Autonomous Framework for Intelligent Incident Detect
 
 **Everything here runs on a labelled SYNTHETIC benchmark with SIMULATED remediation.** No production system is touched.
 
-\## Screenshots
+## Screenshots
 
 
 
-\### Incident Explanation and Report
+### Incident Explanation and Report
 
-!\[Incident explanation and report](docs/incident\_explanation\_and\_report.png)
-
-
-
-\### Live Incident Dashboard
-
-!\[Live incident dashboard](docs/live\_incident\_dashboard.png)
+![Incident explanation and report](docs/incident_explanation_and_report.png)
 
 
 
-\### External Dataset Evaluation
+### Live Incident Dashboard
 
-!\[External dataset evaluation](docs/external\_dataset\_evaluation.png)
-
-
-
-\### Detection Performance Comparison
-
-!\[Detection performance comparison](docs/detection\_performance\_comparison.png)
+![Live incident dashboard](docs/live_incident_dashboard.png)
 
 
 
-\### Real Dataset Comparison
+### External Dataset Evaluation
 
-!\[Real dataset comparison](docs/real\_dataset\_comparison.png)
-
-
-
-\### Real Data Lab
-
-!\[Real data lab dashboard](docs/real\_data\_lab\_dashboard.png)
+![External dataset evaluation](docs/external_dataset_evaluation.png)
 
 
 
-\### Live Machine Monitoring
+### Detection Performance Comparison
 
-!\[Live machine monitoring](docs/live\_machine\_monitoring.png)
+![Detection performance comparison](docs/detection_performance_comparison.png)
 
 
 
-\### Agent Workflow
+### Real Dataset Comparison
 
-!\[Agent workflow dashboard](docs/agent\_workflow\_dashboard.png)Integration status
+![Real dataset comparison](docs/real_dataset_comparison.png)
+
+
+
+### Real Data Lab
+
+![Real data lab dashboard](docs/real_data_lab_dashboard.png)
+
+
+
+### Live Machine Monitoring
+
+![Live machine monitoring](docs/live_machine_monitoring.png)
+
+
+
+### Agent Workflow
+
+![Agent workflow dashboard](docs/agent_workflow_dashboard.png)
+
+## Integration status (honest)
 
 |Component|Status|
 |-|-|
@@ -70,12 +72,12 @@ python -m venv .venv
 .venv\\Scripts\\activate          # Windows   (Linux/Mac: source .venv/bin/activate)
 pip install -r requirements.txt
 python -m pytest -q             # 13 tests
-python cli.py demo --scenario db\_pool\_exhaustion
+python cli.py demo --scenario db_pool_exhaustion
 python cli.py experiments       # regenerates EVERYTHING in results/
 uvicorn api:app --port 8000     # then open http://127.0.0.1:8000  (web UI)
 ```
 
-Scenarios for `--scenario`: normal, cpu\_saturation, db\_pool\_exhaustion, memory\_leak, dependency\_failure, bad\_deployment, ambiguous, missing\_evidence, action\_unavailable, failed\_remediation, partial\_recovery.
+Scenarios for `--scenario`: normal, cpu_saturation, db_pool_exhaustion, memory_leak, dependency_failure, bad_deployment, ambiguous, missing_evidence, action_unavailable, failed_remediation, partial_recovery.
 
 
 
@@ -97,21 +99,21 @@ Scenarios for `--scenario`: normal, cpu\_saturation, db\_pool\_exhaustion, memor
 
 
 
-(Add the source of the remaining two zips, `archive\_\_12\_.zip` and `location\_info\_of\_ssd\_csv.zip`, here.)
+(Add the source of the remaining two zips, `archive__12_.zip` and `location_info_of_ssd_csv.zip`, here.)
 
 ## Regenerate all paper numbers
 
-`python cli.py experiments` -> `results/`: scenario\_summary.csv, incident\_predictions.csv, alert\_correlation\_results.csv,
-rca\_evaluation.csv, remediation\_results.csv, verification\_results.csv, baseline\_comparison.csv, aggregate\_metrics.json,
-repeated\_runs.{csv,json}, confusion\_\*.png/json, comparison.png, ieee\_tables.tex, reports/<case>.json, dataset\_synthetic.jsonl.
-Tables are produced by `aiops\_agent/reporting.py` from the JSON files; nothing is typed by hand. Main run = seed 42 (120 cases); repeated runs = seeds 42-46.
+`python cli.py experiments` -> `results/`: scenario_summary.csv, incident_predictions.csv, alert_correlation_results.csv,
+rca_evaluation.csv, remediation_results.csv, verification_results.csv, baseline_comparison.csv, aggregate_metrics.json,
+repeated_runs.{csv,json}, confusion_*.png/json, comparison.png, ieee_tables.tex, reports/<case>.json, dataset_synthetic.jsonl.
+Tables are produced by `aiops_agent/reporting.py` from the JSON files; nothing is typed by hand. Main run = seed 42 (120 cases); repeated runs = seeds 42-46.
 
 ## Method summary
 
 * **Detection**: robust z-score (median/MAD of first 20 samples) > 6 for >= 4 consecutive samples + absolute floor. Symptoms only.
 * **Correlation**: rules R1 same service, R2 adjacent in call graph + (shared trace | same type | propagation), within 120 s; union-find.
 * **RCA**: weighted evidence features -> softmax *relative support* (not calibrated probability). Escalate if top < 0.60 or margin < 0.20 (thresholds fixed in `config.py` before experiments).
-* **Safety**: allowlist + policy (target, params, sandbox only); no shell; `rollback\_deployment` needs human approval; live mode raises `NotImplementedError`.
+* **Safety**: allowlist + policy (target, params, sandbox only); no shell; `rollback_deployment` needs human approval; live mode raises `NotImplementedError`.
 * **Verification**: median of last 5 post samples vs baseline/peak; resolved / unresolved / inconclusive. Execution OK != resolved.
 * **Baseline**: see `baseline.py` docstring. Detection = any alert; group by service; first-alert-type -> cause; executes mapped action, claims success without verification.
 * **Simulated time**: detection delay + configured action duration + verification window (seconds, simulated). Not comparable to real MTTR. Baseline TTR is over only the few cases where it truly fixed the incident, so it is not a like-for-like comparison.
