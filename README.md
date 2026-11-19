@@ -8,39 +8,27 @@ Project: *An AI-Agent-Based Autonomous Framework for Intelligent Incident Detect
 
 
 
-\### Live Incident Dashboard
-
-!\[Live incident dashboard](docs/live\_incident\_dashboard.png)
-
-
-
-\### Agent Workflow
-
-!\[Agent workflow dashboard](docs/agent\_workflow\_dashboard.png)
-
-
-
 \### Incident Explanation and Report
 
 !\[Incident explanation and report](docs/incident\_explanation\_and\_report.png)
 
 
 
-\### Live Machine Monitoring
+\### Live Incident Dashboard
 
-!\[Live machine monitoring](docs/live\_machine\_monitoring.png)
-
-
-
-\### Detection Performance Comparison
-
-!\[Detection performance comparison](docs/detection\_performance\_comparison.png)
+!\[Live incident dashboard](docs/live\_incident\_dashboard.png)
 
 
 
 \### External Dataset Evaluation
 
 !\[External dataset evaluation](docs/external\_dataset\_evaluation.png)
+
+
+
+\### Detection Performance Comparison
+
+!\[Detection performance comparison](docs/detection\_performance\_comparison.png)
 
 
 
@@ -54,7 +42,17 @@ Project: *An AI-Agent-Based Autonomous Framework for Intelligent Incident Detect
 
 !\[Real data lab dashboard](docs/real\_data\_lab\_dashboard.png)
 
-## Integration status
+
+
+\### Live Machine Monitoring
+
+!\[Live machine monitoring](docs/live\_machine\_monitoring.png)
+
+
+
+\### Agent Workflow
+
+!\[Agent workflow dashboard](docs/agent\_workflow\_dashboard.png)Integration status
 
 |Component|Status|
 |-|-|
